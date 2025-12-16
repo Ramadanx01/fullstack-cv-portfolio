@@ -1,0 +1,120 @@
+{
+    "nav": {
+        "about": "About",
+        "skills": "Skills",
+        "projects": "Projects",
+        "certificates": "Certificates",
+        "contact": "Contact"
+    },
+    "hero": {
+        "jobTitle": "Full-Stack Web Developer — System Builder",
+        "name": "Mohamad Ramadan",
+		"description": "Full Stack Web Developer specialized in building production-ready systems from scratch, including authentication, multi-role dashboards, and real business logic.",
+        "viewProjects": "View Featured Projects",
+        "downloadCV": "Download CV (PDF)",
+        "contactMe": "Contact Me",
+        "github": "GitHub",
+        "cvAlert": "The CV is not available for download at the moment. It will be uploaded soon."
+    },
+    "meta": {
+        "title": "Mohamad Ramadan | Full Stack Web Developer"
+    },
+    "modal": {
+        "cvTitle": "Curriculum Vitae (CV)",
+        "close": "Close"
+    },
+    "about": {
+        "title": "About Me",
+        "description": "I am a Full Stack Web Developer who builds practical systems end-to-end. I enjoy taking concepts from idea to production and solving real problems with clean, maintainable code.",
+        "additionalDescription": "I focus on system-level development, working with authentication flows, admin dashboards, database design, and real business requirements. I have hands-on experience converting Figma designs into functional applications.",
+        "ref1": "W3Schools",
+        "ref2": "code2z.netlify.app",
+        "ref3": "t.me/codeDarija"
+    },
+    "skills": {
+        "title": "Tech Stack"
+    },
+    "certificates": {
+        "title": "Certificates & Achievements",
+        "cert1": {
+            "title": "Robotics Workshop",
+            "provider": "Provider: Skills Area",
+            "date": "Date: 15 / 12 / 2024"
+        },
+        "cert2": {
+            "title": "ISEF Volunteering",
+            "provider": "Provider: ISEF",
+            "date": "Date: 09 / 12 / 2025"
+        },
+        "view": "View Certificate"
+    },
+    "training": {
+        "title": "Training & Professional Experience",
+        "mtec": {
+            "title": "Full Stack Training",
+            "provider": "Provider: MTEC",
+            "viewCompany": "View Company <i class='ri-external-link-line ml-1'></i>"
+        }
+    },
+    "projects": {
+        "title": "Selected Projects",
+        "description": "A range of practical systems and web applications, with live demos and source code.",
+        "liveDemo": "Live Demo",
+        "code": "Code (GitHub)",
+        "learningTitle": "Early Learning & Frontend Practice",
+        "privateTitle": "Private & Commercial Prototypes",
+        "privateDescription": "These projects were developed for specific clients and are not publicly available due to confidentiality and ownership rights.",
+        "learningDescription": "Early projects used to strengthen core frontend skills and explore UI concepts.",
+        "p1": { "title": "Electronic Blog", "description": "A responsive blog application built with modern frontend practices, focusing on clean UI, performance, and maintainable code.", "tech": "Tech: HTML, CSS, JavaScript" },
+        "p2": { "title": "Wood Calculator System", "description": "Calculates wood cubic measurements based on accounting experience.", "tech": "Tech: JavaScript. Convertible to Web App." },
+        "p3": { "title": "Coffee Shop Website", "description": "Built with HTML, CSS and JavaScript with several animations.", "tech": "Tech: HTML, CSS, JavaScript" },
+        "p4": { "title": "Learn Frontend", "description": "Early UI-focused learning project." },
+        "p5": { "title": "Wood Management System", "description": "Full JS system to manage wood inventory — a practical project." },
+        "p6": { "title": "To-Do List App", "description": "Shows strong JavaScript fundamentals." },
+        "p7": { "title": "Luxury Cars Website", "description": "Modern landing page design." },
+        "p8": { "title": "Juicyland (Bootstrap)", "description": "Early Bootstrap training project." },
+        "p9": { "title": "ISEF Prototype 1", "description": "A prototype for ISEF participants containing scientific material.", "disclaimer": "Preview or code are not available as this is a private project." },
+        "p10": { "title": "ISEF Prototype 2", "description": "A second prototype for ISEF participants with a different design approach.", "disclaimer": "Preview or code are not available as this is a private project." }
+    },
+    "whatIBuild": {
+        "title": "What I Build",
+        "point1": "Full management systems (Admin / User roles)",
+        "point2": "Authentication & verification systems (OTP)",
+        "point3": "Dashboards & control panels",
+        "point4": "Real-world business applications",
+        "point5": "Scalable frontend & backend structures"
+    },
+    "future": {
+        "title": "Future Development Path",
+        "point1": "Deep dive into Cyber Security principles and practices.",
+        "point2": "Advanced understanding of Networking & Internet Systems architecture."
+    },
+    "advanced": {
+        "title": "Featured Professional Projects",
+        "techStack": "Tech Stack",
+        "viewOnGithub": "View Code on GitHub",
+        "badgeCommercial": "Commercial Project",
+        "badgeSystem": "Production System",
+        "p1": {
+            "title": "Korsaty (Udemy Competitor)",
+            "description": "A complete educational platform featuring multi-role access (Admin, Instructor, Student), course management, and content delivery systems, built with a focus on scalability."
+        },
+        "p2": {
+            "title": "Sab3awy Clothing System",
+            "description": "An end-to-end management system for a clothing business, handling inventory, sales, and reporting. Currently undergoing a strategic migration to a modern React & Laravel stack for enhanced performance and features."
+        },
+        "p3": {
+            "title": "Wasel Food Delivery",
+            "description": "End-to-end food delivery platform with multi-role access (Super Admin, Restaurant Admin, Customers), secure authentication, order lifecycle management, and commission system."
+        }
+    },
+    "contact": {
+        "title": "Get In Touch",
+        "description": "I am open to new opportunities and freelance inquiries. Send a message or connect via the links below.",
+        "emailDirectly": "Email Me Directly",
+        "github": "GitHub Profile"
+    },
+    "footer": {
+        "text": "© <span id='year'></span> Mohamad Ramadan — Full Stack Web Developer"
+    }
+}

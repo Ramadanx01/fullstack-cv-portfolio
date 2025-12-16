@@ -1,0 +1,39 @@
+/* RTL specific styles */
+[dir="rtl"] {
+    /* The font is now handled by Tailwind config, but this can be a fallback */
+    font-family: 'Cairo', 'Inter', sans-serif;
+}
+
+/* Ensure text-center works as expected */
+[dir="rtl"] .text-center {
+    text-align: center;
+}
+
+[dir="rtl"] .md\:text-left {
+    text-align: right;
+}
+
+[dir="rtl"] .md\:justify-start {
+    justify-content: flex-end;
+}
+
+[dir="rtl"] .self-start {
+    align-self: flex-end;
+}
+
+[dir="rtl"] .list-disc {
+    padding-right: 1.5rem;
+    padding-left: 0;
+}
+
+/* Adjust icon margins for RTL in links */
+[dir="rtl"] .ri-external-link-line.ml-1 {
+    margin-left: 0;
+    margin-right: 0.25rem;
+}
+
+/* Adjust icon margins for RTL in buttons (e.g., GitHub button in contact form) */
+[dir="rtl"] .ri-github-line.mr-2 {
+    margin-right: 0;
+    margin-left: 0.5rem;
+}

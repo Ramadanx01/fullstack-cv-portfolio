@@ -1,0 +1,587 @@
+<!doctype html>
+
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title data-i18n="meta.title">Mohamad Ramadan | Full Stack Web Developer</title>
+		<meta name="description" content="Full Stack Web Developer specialized in building real-world systems from scratch, including authentication, dashboards, role-based access, and business logic using PHP, MySQL, React, and modern web technologies." />
+		<meta name="author" content="Mohamad Ramadan">
+		<meta name="keywords" content="Full Stack Developer, Web Developer, PHP, React, JavaScript, MySQL, Laravel, Portfolio">
+
+		<!-- Open Graph / WhatsApp / Facebook -->
+		<meta property="og:title" content="Mohamad Ramadan | Full Stack Web Developer" />
+		<meta property="og:description" content="Full Stack Developer building real-world systems using React, PHP, MySQL, and modern web technologies." />
+		<meta property="og:image" content="https://ramadanx01.github.io/FullStack_CV_Portfolio/images/profile2.jpg" />
+		<meta property="og:url" content="https://ramadanx01.github.io/FullStack_CV_Portfolio/" />
+		<meta property="og:type" content="website" />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Mohamad Ramadan | Full Stack Web Developer" />
+		<meta name="twitter:description" content="Full Stack Developer building real-world systems using React, PHP, MySQL, and modern web technologies." />
+		<meta name="twitter:image" content="https://ramadanx01.github.io/FullStack_CV_Portfolio/images/profile2.jpg" />
+
+		<!-- Favicon -->
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+		<!-- PWA & Theme -->
+		<link rel="manifest" href="manifest.json">
+		<meta name="theme-color" content="#0f172a">
+
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script>
+			tailwind.config = {
+				darkMode: 'class',
+				theme: {
+					extend: {
+						fontFamily: {
+							sans: ['Cairo', 'Inter', 'ui-sans-serif', 'system-ui'],
+						},
+						colors: {
+							primary: '#0f172a',     // slate-900
+							accent: '#2563eb',      // blue-600
+							accentSoft: '#dbeafe',  // blue-100
+							bgSoft: '#f8fafc'       // slate-50
+						}
+					}
+				}
+			}
+		</script>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+		<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+		<link href="assets/rtl.css" rel="stylesheet">
+
+		<style>
+			/* Minimal custom styles for animation control */
+			html { scroll-behavior: smooth; }			
+			.anim {
+				opacity: 0;
+				transform: translateY(20px); /* Less aggressive animation */
+				transition: opacity .6s ease, transform .6s cubic-bezier(.22,.61,.36,1);
+			}
+			.anim.in-view {
+				opacity: 1;
+				transform: translateY(0);
+			}
+			/* Custom class for better certificate image display */
+			.certificate-img {
+				height: 220px;
+				object-fit: cover;
+				border-radius: 12px;
+			}
+			/* Styles for the image preview modal */
+			.modal {
+				position: fixed;
+				z-index: 50;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				overflow: auto;
+				background-color: rgba(0,0,0,0.85);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			/* Styles for fixed navigation arrows */
+			.scroll-nav {
+				position: fixed;
+				right: 1rem;
+				bottom: 1rem;
+				z-index: 40;
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+			}
+			.nav-active { color: #2563eb; } /* accent color */
+
+			/* Loading spinner animation */
+			@keyframes spin {
+				to { transform: rotate(360deg); }
+			}
+			.is-loading { animation: spin 0.8s linear infinite; }
+		</style>
+
+	</head>
+	<body class="bg-bgSoft dark:bg-slate-900 text-primary antialiased leading-relaxed">
+
+		<header id="main-header" class="sticky top-0 bg-white/80 backdrop-blur z-40 border-b border-slate-100 shadow-sm dark:bg-slate-900/80 dark:border-slate-800 transition-transform duration-300">
+			<div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+				<div class="flex items-center gap-3">
+					<div class="relative w-8 h-8 rounded-full bg-cover bg-center cursor-pointer preview-btn" style="background-image: url('images/profile1.jpg');" data-img-src="images/profile1.jpg">
+						<div class="absolute inset-0 pointer-events-none"></div>
+					</div>
+					<a href="#hero" class="font-bold text-xl text-accent dark:text-blue-400">Ramadanx01</a>
+				</div>
+				<div class="flex items-center gap-4">
+					<nav class="hidden md:flex gap-6 items-center text-sm font-medium text-slate-700 dark:text-slate-300">
+						<a href="#about" class="hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.about">About</a>
+						<a href="#skills" class="hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.skills">Skills</a>
+						<a href="#certificates" class="hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.certificates">Certificates</a>
+						<a href="#projects" class="hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.projects">Projects</a>
+						<a href="#contact" class="hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.contact">Contact</a>
+					</nav>
+					<!-- Language Dropdown -->
+					<div class="relative">
+						<button id="lang-toggle-btn" class="p-2 rounded-lg text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Open language menu">
+							<i class="ri-translate-2 text-xl"></i>
+						</button>
+						<div id="lang-menu" class="hidden absolute right-0 mt-2 w-36 bg-white dark:bg-slate-800 rounded-lg shadow-xl border dark:border-slate-700 p-2 z-50">
+							<button data-lang="en" class="lang-option w-full text-left px-3 py-2 text-sm rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 dark:text-slate-200">English (EN)</button>
+							<button data-lang="ar" class="lang-option w-full text-left px-3 py-2 text-sm rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 dark:text-slate-200">العربية (AR)</button>
+						</div>
+					</div>
+
+					<!-- Theme Toggle -->
+					<button id="theme-toggle" class="p-2 rounded-lg text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Toggle theme">
+						<i class="ri-sun-line text-xl" id="theme-icon-light"></i>
+						<i class="ri-moon-line text-xl hidden" id="theme-icon-dark"></i>
+					</button>
+					<div class="md:hidden">
+						<button id="menuBtn" aria-label="Open menu" class="p-2 rounded-lg text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"><i class="ri-menu-3-line text-xl"></i></button>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- Mobile Sidebar -->
+		<div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
+		<nav id="mobileNav" class="fixed top-0 right-0 h-full w-64 bg-white dark:bg-slate-900 shadow-lg p-5 z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+			<div class="flex justify-between items-center mb-8">
+				<span class="font-bold text-lg text-accent dark:text-blue-400">Menu</span>
+				<button id="closeMenuBtn" aria-label="Close menu" class="p-2 rounded-lg text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"><i class="ri-close-line text-xl"></i></button>
+			</div>
+			<a href="#about" class="block p-3 rounded-lg hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800" data-i18n="nav.about">About</a>
+			<a href="#skills" class="block p-3 rounded-lg hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 nav-link" data-i18n="nav.skills">Skills</a>
+			<a href="#certificates" class="block p-3 rounded-lg hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 nav-link" data-i18n="nav.certificates">Certificates</a>
+			<a href="#projects" class="block p-3 rounded-lg hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 nav-link" data-i18n="nav.projects">Projects</a>
+			<a href="#contact" class="block p-3 rounded-lg hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 nav-link" data-i18n="nav.contact">Contact</a>
+		</nav>
+
+		<main class="text-primary" id="main-content">
+			<section id="hero" class="min-h-[85vh] flex items-center bg-white dark:bg-slate-900 text-center md:text-left">
+				<div class="max-w-6xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-2 items-center">
+					
+					<!-- Text Content (always first on mobile, first column on desktop) -->
+					<div class="space-y-6 order-1 anim dark:text-slate-200" data-animate>
+						<p class="text-sm text-accent font-semibold tracking-wider uppercase" data-i18n="hero.jobTitle">Full Stack Web Developer</p>
+						
+						<!-- Container for Image + Name on Mobile -->
+						<div class="flex items-center gap-4 md:block">
+							<div class="md:hidden relative w-20 h-20 rounded-full shadow-lg border-2 border-accent/20 flex-shrink-0 cursor-pointer preview-btn bg-cover bg-center" style="background-image: url('images/profile1.jpg');" data-img-src="images/profile1.jpg">
+								<div class="absolute inset-0 pointer-events-none"></div>
+							</div>
+							<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary dark:text-white" data-i18n="hero.name">Mohamad Ramadan</h1>
+						</div>
+
+						<p class="text-slate-700 dark:text-slate-300 max-w-xl" data-i18n="hero.description">Full Stack Web Developer specialized in building complete real-world systems from scratch, including authentication, role-based access, dashboards, and business logic. Comfortable across frontend and backend stacks.</p>
+
+						<div class="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
+							<a href="#projects" class="px-6 py-3 bg-accent text-white font-semibold rounded-xl text-sm shadow-lg shadow-accent/30 hover:bg-blue-700 dark:shadow-blue-900/40 transition-colors duration-300 transform hover:scale-[1.02]" data-i18n="hero.viewProjects">View Projects</a>
+							<a href="#contact" class="px-6 py-3 border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 font-semibold rounded-xl text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300" data-i18n="hero.contactMe">Contact Me</a>
+							<button id="download-cv-btn" class="px-4 py-3 border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 rounded-xl text-sm flex items-center gap-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300"><i class="ri-download-2-line"></i> <span data-i18n="hero.downloadCV">Download CV</span></button>
+							<a href="https://github.com/Ramadanx01" target="_blank" rel="noopener" class="px-4 py-3 border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 rounded-xl text-sm flex items-center gap-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300"><i class="ri-github-line"></i> <span data-i18n="hero.github">GitHub</span></a>
+						</div>
+					</div>
+
+					<!-- Image Content (always second on mobile, second column on desktop) -->
+					<div class="hidden md:flex justify-center order-2 anim" data-animate>
+						<div class="relative w-48 h-48 md:w-80 md:h-80 rounded-full shadow-xl border-4 border-accent/20 flex-shrink-0 cursor-pointer preview-btn bg-cover bg-center" id="hero-image-container" style="background-image: url('images/profile1.jpg');" data-img-src="images/profile1.jpg">
+							<div class="absolute inset-0 pointer-events-none"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="advanced" class="py-20 bg-white dark:bg-slate-900">
+				<div class="max-w-6xl mx-auto px-6">
+					<h2 class="text-3xl font-bold text-primary dark:text-white anim" data-animate data-i18n="advanced.title">Featured Professional Projects</h2>
+					<div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+						<!-- Wasel Food Delivery -->
+						<article class="bg-bgSoft dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col border border-slate-100 dark:border-slate-700 anim" data-animate>
+							<div class="flex-grow">
+								<div class="flex items-center gap-4 mb-4 h-12">
+									<img src="images/projects_backend/wasel.png" alt="Wasel Logo" class="h-full object-contain" />
+									<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="advanced.p3.title">Wasel Food Delivery</h4>
+								</div>								
+								<p class="text-sm text-slate-600 dark:text-slate-400 mb-4" data-i18n="advanced.p3.description">End-to-end food delivery platform with multi-role access (Super Admin, Restaurant Admin, Customers), secure authentication, order lifecycle management, and commission system.</p>
+								<div class="mb-4">
+									<p class="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider" data-i18n="advanced.techStack">Tech Stack</p>
+									<div class="flex flex-wrap gap-2"><span class="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-1 rounded-full">PHP</span><span class="text-xs font-medium bg-orange-100 text-orange-800 px-2 py-1 rounded-full">SQL</span><span class="text-xs font-medium bg-green-100 text-green-800 px-2 py-1 rounded-full">Node.js</span></div>
+								</div>
+							</div>
+							<a href="https://github.com/Ramadanx01/Wasel_website" target="_blank" rel="noopener" class="mt-auto inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 text-sm rounded-lg bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition"><i class="ri-github-line"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
+						</article>
+						<!-- Korsaty -->
+						<article class="bg-bgSoft dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col border border-slate-100 dark:border-slate-700 anim" data-animate>
+							<div class="flex-grow">
+								<div class="flex items-center gap-4 mb-4 h-12">
+									<img src="images/projects_backend/korsty.png" alt="Korsaty Logo" class="h-full object-contain" />
+									<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="advanced.p1.title">Korsaty (Udemy Competitor)</h4>
+								</div>
+								<p class="text-sm text-slate-600 dark:text-slate-400 mb-4" data-i18n="advanced.p1.description">A significant PHP-based educational platform, currently in development.</p>
+								<div class="mb-4">
+									<p class="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider" data-i18n="advanced.techStack">Tech Stack</p>
+									<div class="flex flex-wrap gap-2"><span class="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-1 rounded-full">PHP</span><span class="text-xs font-medium bg-orange-100 text-orange-800 px-2 py-1 rounded-full">MySQL</span></div>
+								</div>
+							</div>
+							<a href="https://github.com/Ramadanx01/Korsaty" target="_blank" rel="noopener" class="mt-auto inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 text-sm rounded-lg bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition"><i class="ri-github-line"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
+						</article>
+						<!-- Sab3awy -->
+						<article class="bg-bgSoft dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col border border-slate-100 dark:border-slate-700 anim" data-animate>
+							<div class="flex-grow">
+								<div class="flex items-center gap-4 mb-4 h-12">
+									<img src="images/projects_backend/sab3awy.png" alt="Sab3awy Logo" class="h-full object-contain" />
+									<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="advanced.p2.title">Sab3awy Clothing System</h4>
+								</div>
+								<p class="text-sm text-slate-600 dark:text-slate-400 mb-4" data-i18n="advanced.p2.description">A full management system undergoing migration to a modern React & Laravel stack.</p>
+								<div class="mb-4">
+									<p class="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider" data-i18n="advanced.techStack">Tech Stack</p>
+									<div class="flex flex-wrap gap-2"><span class="text-xs font-medium bg-sky-100 text-sky-800 px-2 py-1 rounded-full">React</span><span class="text-xs font-medium bg-red-100 text-red-800 px-2 py-1 rounded-full">Laravel</span></div>
+								</div>
+							</div>
+							<a href="https://github.com/Ramadanx01/sab3awy" target="_blank" rel="noopener" class="mt-auto inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 text-sm rounded-lg bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition"><i class="ri-github-line"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
+						</article>
+					</div>
+				</div>
+			</section>
+
+			<section id="training" class="py-20 bg-bgSoft dark:bg-slate-800">
+				<div class="max-w-6xl mx-auto px-6">
+					<h2 class="text-3xl font-bold text-primary dark:text-white mb-8 anim" data-animate data-i18n="training.title">Training & Professional Experience</h2>
+					<div class="mt-6 flex justify-center">
+						<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-5 border border-slate-100 dark:border-slate-800 anim flex flex-col max-w-sm preview-btn cursor-pointer" data-animate data-img-src="images/MTEC-Software Company.png">
+							<div class="relative w-full h-[220px] rounded-xl mb-5 border border-slate-200 dark:border-slate-700 bg-contain bg-no-repeat bg-center" style="background-image: url('images/MTEC-Software Company.png');">
+								<div class="absolute inset-0 pointer-events-none"></div>
+							</div>
+							<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="training.mtec.title">Full Stack Training</h4>
+							<p class="text-sm text-slate-600 dark:text-slate-400 mt-1" data-i18n="training.mtec.description">Completed intensive training at MTEC - Software Company.</p>
+							<div class="mt-auto pt-3 flex items-center gap-4">
+								<a href="https://www.facebook.com/profile.php?id=61568788089404" target="_blank" rel="noopener" class="text-sm font-semibold text-accent dark:text-blue-400 hover:underline" data-i18n="training.mtec.viewCompany">
+									View Company <i class="ri-external-link-line ml-1"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="certificates" class="py-20 bg-white dark:bg-slate-900">
+				<div class="max-w-6xl mx-auto px-6">
+					<h2 class="text-3xl font-bold text-primary dark:text-white mb-8 anim" data-animate data-i18n="certificates.title">Certificates & Achievements</h2>
+					<div class="mt-6 flex flex-wrap justify-center gap-8" id="certificates-grid">
+						<article class="bg-bgSoft dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-5 border border-slate-100 dark:border-slate-700 anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/Certificates/Certificat1.jpg">
+							<div class="relative w-full h-[220px] rounded-xl mb-5 border border-slate-200 dark:border-slate-700 bg-cover bg-center" style="background-image: url('images/Certificates/Certificat1.jpg');">
+								<div class="absolute inset-0 pointer-events-none"></div>
+							</div>
+							<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="certificates.cert1.title">Robotics Workshop</h4>
+							<p class="text-sm text-slate-600 dark:text-slate-400 mt-1" data-i18n="certificates.cert1.description">Certificate of participation from Skills Area.</p>
+							<p class="text-xs text-slate-500 mt-2" data-i18n="certificates.cert1.date">Date: 15 / 12 / 2024</p>
+							<button class="mt-auto pt-3 text-sm font-semibold text-accent dark:text-blue-400 hover:underline self-start" data-i18n="certificates.view">View Certificate</button>
+						</article>
+
+						<article class="bg-bgSoft dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-5 border border-slate-100 dark:border-slate-700 anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/Certificates/Certificates2.jpg">
+							<div class="relative w-full h-[220px] rounded-xl mb-5 border border-slate-200 dark:border-slate-700 bg-cover bg-center" style="background-image: url('images/Certificates/Certificates2.jpg');">
+								<div class="absolute inset-0 pointer-events-none"></div>
+							</div>
+							<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="certificates.cert2.title">ISEF Volunteering</h4>
+							<p class="text-sm text-slate-600 dark:text-slate-400 mt-1" data-i18n="certificates.cert2.description">International Science and Engineering Fair.</p>
+							<p class="text-xs text-slate-500 mt-2" data-i18n="certificates.cert2.date">Date: 09 / 12 / 2025</p>
+							<button class="mt-auto pt-3 text-sm font-semibold text-accent dark:text-blue-400 hover:underline self-start" data-i18n="certificates.view">View Certificate</button>
+						</article>
+					</div>
+				</div>
+			</section>
+
+			<section id="projects" class="py-20 bg-bgSoft dark:bg-slate-800">
+				<div class="max-w-6xl mx-auto px-6">
+					<h2 class="text-3xl font-bold text-primary dark:text-white anim" data-animate data-i18n="projects.title">Selected Web Applications</h2>
+					<p class="text-base text-slate-600 dark:text-slate-400 mt-3 anim" data-animate data-i18n="projects.description">A range of practical systems and web applications, with live demos and source code.</p>
+
+					<div id="selected-projects" class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+						<!-- Wood Management System -->
+						<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/system-wood.png">
+							<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/system-wood.png');"><div class="absolute inset-0 pointer-events-none"></div></div>
+							<div class="p-5 flex flex-col flex-grow">
+								<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p5.title">Wood Management System</h4>
+								<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p5.description">Full JS system to manage wood inventory — a practical project.</p>
+								<div class="mt-4 flex gap-3">
+									<a href="https://ramadanx01.github.io/system/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
+									<a href="https://github.com/Ramadanx01/system" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+								</div>
+							</div>
+						</article>
+
+						<!-- Electronic Blog -->
+						<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/blog.jpg">
+							<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/blog.jpg');"><div class="absolute inset-0 pointer-events-none"></div></div>
+							<div class="p-5 flex flex-col flex-grow">
+								<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p1.title">Electronic Blog</h4>
+								<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p1.description">A responsive blog application built with modern frontend practices, focusing on clean UI, performance, and maintainable code.</p>
+								<p class="text-xs text-slate-500 dark:text-slate-500 mt-2" data-i18n="projects.p1.tech">Tech: HTML, CSS, JavaScript</p>
+								<div class="mt-4 flex gap-3">
+									<a href="https://ramadanx01.github.io/blog/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
+									<a href="https://github.com/Ramadanx01/blog" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+								</div>
+							</div>
+						</article>
+
+						<!-- Wood Calculator System -->
+						<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/calcoulater.jpg">
+							<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/calcoulater.jpg');"><div class="absolute inset-0 pointer-events-none"></div></div>
+							<div class="p-5 flex flex-col flex-grow">
+								<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p2.title">Wood Calculator System</h4>
+								<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p2.description">Calculates wood cubic measurements based on accounting experience.</p>
+								<p class="text-xs text-slate-500 dark:text-slate-500 mt-2" data-i18n="projects.p2.tech">Tech: JavaScript. Convertible to Web App.</p>
+								<div class="mt-4 flex gap-3">
+									<a href="https://ramadanx01.github.io/calcolator-wood/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
+									<a href="https://github.com/Ramadanx01/calcolator-wood" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+								</div>
+							</div>
+						</article>
+
+						<!-- To-Do List App -->
+						<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/todo.jpg">
+							<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/todo.jpg');"><div class="absolute inset-0 pointer-events-none"></div></div>
+							<div class="p-5 flex flex-col flex-grow">
+								<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p6.title">To-Do List App</h4>
+								<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p6.description">Shows strong JavaScript fundamentals.</p>
+								<div class="mt-4 flex gap-3">
+									<a href="https://ramadanx01.github.io/To-Do-List/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
+									<a href="https://github.com/Ramadanx01/To-Do-List" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+								</div>
+							</div>
+						</article>
+					</div>
+
+					<!-- Early Learning Projects -->
+					<div class="mt-20">
+						<h3 class="text-2xl font-bold text-primary dark:text-white anim" data-animate data-i18n="projects.learningTitle">Early Learning & Frontend Practice</h3>
+						<p class="text-base text-slate-600 dark:text-slate-400 mt-3 anim" data-animate data-i18n="projects.learningDescription">Early projects used to strengthen core frontend skills and explore UI concepts.</p>
+						<div id="learning-projects" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+							<!-- Coffee Shop -->
+							<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/coffee_shop.png">
+								<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/coffee_shop.png');"><div class="absolute inset-0 pointer-events-none"></div></div>
+								<div class="p-5 flex flex-col flex-grow">
+									<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p3.title">Coffee Shop Website</h4>
+									<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p3.description">Built with HTML, CSS and JavaScript with several animations.</p>
+									<div class="mt-4 flex gap-3">
+										<a href="https://ramadanx01.github.io/cofipop/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
+										<a href="https://github.com/Ramadanx01/cofipop" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+									</div>
+								</div>
+							</article>
+							<!-- Learn Frontend -->
+							<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/learn-frontEnd.jpg">
+								<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/learn-frontEnd.jpg');"><div class="absolute inset-0 pointer-events-none"></div></div>
+								<div class="p-5 flex flex-col flex-grow">
+									<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p4.title">Learn Frontend</h4>
+									<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p4.description">Early UI-focused learning project.</p>
+									<div class="mt-4 flex gap-3">
+										<a href="https://ramadanx01.github.io/learn-front-end/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
+										<a href="https://github.com/Ramadanx01/learn-front-end" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+									</div>
+								</div>
+							</article>
+							<!-- Luxury Cars -->
+							<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/Vikings_Auto_Trade.jpg">
+								<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/Vikings_Auto_Trade.jpg');"><div class="absolute inset-0 pointer-events-none"></div></div>
+								<div class="p-5 flex flex-col flex-grow">
+									<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p7.title">Luxury Cars Website</h4>
+									<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p7.description">Modern landing page design.</p>
+									<div class="mt-4 flex gap-3">
+										<a href="https://ramadanx01.github.io/Viking/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
+										<a href="https://github.com/Ramadanx01/Viking" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+									</div>
+								</div>
+							</article>
+							<!-- Juicyland -->
+							<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/juicyland.jpg">
+								<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/juicyland.jpg');"><div class="absolute inset-0 pointer-events-none"></div></div>
+								<div class="p-5 flex flex-col flex-grow">
+									<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p8.title">Juicyland (Bootstrap)</h4>
+									<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p8.description">Early Bootstrap training project.</p>
+									<div class="mt-4 flex gap-3">
+										<a href="https://ramadanx01.github.io/prject1-for-bootstrap/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
+										<a href="https://github.com/Ramadanx01/prject1-for-bootstrap" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+									</div>
+								</div>
+							</article>
+						</div>
+					</div>
+
+					<!-- Private Projects -->
+					<div class="mt-20">
+						<h3 class="text-2xl font-bold text-primary dark:text-white anim" data-animate data-i18n="projects.privateTitle">Private & Commercial Prototypes</h3>
+						<p class="text-base text-slate-600 dark:text-slate-400 mt-3 anim" data-animate data-i18n="projects.privateDescription">These projects were developed for specific clients and are not publicly available due to confidentiality and ownership rights.</p>
+						<div id="private-projects" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+							<!-- ISEF Prototype 1 -->
+							<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col" data-animate>
+								<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/prototype.png');"></div>
+								<div class="p-5 flex flex-col flex-grow">
+									<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p9.title">ISEF Prototype 1</h4>
+									<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p9.description">A prototype for ISEF participants containing scientific material.</p>
+									<p class="mt-4 text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 p-2 rounded-md" data-i18n="projects.p9.disclaimer">Preview or code are not available as this is a private project.</p>
+								</div>
+							</article>
+							<!-- ISEF Prototype 2 -->
+							<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col" data-animate>
+								<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/prototype2.png');"></div>
+								<div class="p-5 flex flex-col flex-grow">
+									<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p10.title">ISEF Prototype 2</h4>
+									<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p10.description">A second prototype for ISEF participants with a different design approach.</p>
+									<p class="mt-4 text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 p-2 rounded-md" data-i18n="projects.p10.disclaimer">Preview or code are not available as this is a private project.</p>
+								</div>
+							</article>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="what-i-build" class="py-20 bg-bgSoft dark:bg-slate-800">
+				<div class="max-w-6xl mx-auto px-6">
+					<h2 class="text-3xl font-bold text-primary dark:text-white anim" data-animate data-i18n="whatIBuild.title">What I Build</h2>
+					<ul class="mt-6 space-y-3 text-lg text-slate-700 dark:text-slate-300 anim list-disc list-inside" data-animate>
+						<li data-i18n="whatIBuild.point1">Full management systems (Admin / User roles)</li>
+						<li data-i18n="whatIBuild.point2">Authentication & verification systems (OTP)</li>
+						<li data-i18n="whatIBuild.point3">Dashboards & control panels</li>
+						<li data-i18n="whatIBuild.point4">Real-world business applications</li>
+						<li data-i18n="whatIBuild.point5">Scalable frontend & backend structures</li>
+					</ul>
+				</div>
+			</section>
+
+			<section id="learning-sources" class="py-20 bg-white dark:bg-slate-900">
+				<div class="max-w-6xl mx-auto px-6">
+					<h2 class="text-3xl font-bold text-primary dark:text-white anim" data-animate data-i18n="certificates.learning.title">Learning Sources & Technical References</h2>
+					<ul class="mt-6 space-y-3 text-lg text-slate-700 dark:text-slate-300 anim list-disc list-inside" data-animate>
+						<li data-i18n="certificates.learning.item1">W3Schools — for core web standards and documentation</li>
+						<li data-i18n="certificates.learning.item2">Code2Z (code2z.netlify.app) — structured learning and practice reference</li>
+						<li data-i18n="certificates.learning.item3">Private instructor-led curriculum (name intentionally omitted)</li>
+						<li data-i18n="certificates.learning.item4">Telegram technical summaries & notes — CodeDarija channel</li>
+					</ul>
+					<p class="mt-4 text-slate-700 dark:text-slate-300 anim" data-animate data-i18n="certificates.learning.paragraph">Completed a full frontend and backend curriculum consisting of approximately 89 recorded lessons, covering both fundamentals and practical system building. Experienced in translating real UI designs from Figma into clean, functional frontend code. The Wasel project was fully designed in Figma and implemented collaboratively as a shared team project.</p>
+				</div>
+			</section>
+
+			<section id="future" class="py-20 bg-white dark:bg-slate-900">
+				<div class="max-w-6xl mx-auto px-6">
+					<h2 class="text-3xl font-bold text-primary dark:text-white anim" data-animate data-i18n="future.title">Future Development Path</h2>
+					<ul class="mt-6 space-y-3 text-lg text-slate-700 dark:text-slate-300 anim list-disc list-inside" data-animate>
+						<li data-i18n="future.point1">Deep dive into Cyber Security principles and practices.</li>
+						<li data-i18n="future.point2">Advanced understanding of Networking & Internet Systems architecture.</li>
+					</ul>
+				</div>
+			</section>
+
+			<section id="contact" class="py-20 bg-bgSoft dark:bg-slate-800">
+				<div class="max-w-3xl mx-auto px-6 text-center">
+					<h2 class="text-3xl font-bold text-primary dark:text-white anim" data-animate data-i18n="contact.title">Get In Touch</h2>
+					<p class="text-base text-slate-600 dark:text-slate-400 mt-3 anim" data-animate data-i18n="contact.description">I am open to new opportunities and freelance inquiries. Send a message or connect via the links below.</p>
+
+
+					<!-- Simplified Contact Buttons -->
+					<div class="mt-10 flex flex-wrap justify-center gap-4 anim" data-animate>
+						<a href="mailto:mrsrm555@gmail.com" class="w-full sm:w-auto px-8 py-4 bg-accent text-white font-semibold rounded-xl text-base shadow-lg shadow-accent/30 hover:bg-blue-700 dark:shadow-blue-900/40 transition-colors duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2">
+							<i class="ri-mail-send-line"></i> <span data-i18n="contact.emailDirectly">Email Me Directly</span>
+						</a>
+						<a href="https://github.com/Ramadanx01" target="_blank" rel="noopener" class="w-full sm:w-auto px-8 py-4 border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 font-semibold rounded-xl text-base hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300 flex items-center justify-center gap-2">
+							<i class="ri-github-line"></i> <span data-i18n="contact.github">GitHub Profile</span>
+						</a>
+					</div>
+				</div>
+			</section>
+
+			<footer class="py-10 text-center text-sm text-slate-600 dark:text-slate-400 bg-bgSoft dark:bg-slate-800 border-t border-slate-100 dark:border-slate-800" data-i18n="footer.text">© <span id="year"></span> Mohamad Ramadan — Full Stack Web Developer</footer>
+		</main>
+
+		<!-- Scroll Navigation Arrows -->
+		<div class="scroll-nav">
+			<button id="scrollUp" aria-label="Scroll Up" class="w-12 h-12 rounded-full bg-accent/80 dark:bg-blue-500/80 text-white shadow-lg hover:bg-accent dark:hover:bg-blue-500 transition backdrop-blur-sm"><i class="ri-arrow-up-s-line text-2xl"></i></button>
+			<button id="scrollDown" aria-label="Scroll Down" class="w-12 h-12 rounded-full bg-accent/80 dark:bg-blue-500/80 text-white shadow-lg hover:bg-accent dark:hover:bg-blue-500 transition backdrop-blur-sm"><i class="ri-arrow-down-s-line text-2xl"></i></button>
+		</div>
+
+		<!-- Generic Alert Modal -->
+		<div id="alertModal" class="modal hidden" role="dialog" aria-modal="true">
+			<div class="relative bg-white dark:bg-slate-800 w-11/12 max-w-md m-auto rounded-2xl shadow-xl p-6 sm:p-8 text-center" id="alertModalContent">
+				<h3 id="alertModalTitle" class="text-xl font-bold text-primary dark:text-white" data-i18n="modal.cvTitle">CV</h3>
+				<p id="alertModalBody" class="text-slate-600 dark:text-slate-300 mt-4" data-i18n="hero.cvAlert">The CV is not available for download at the moment. It will be uploaded soon.</p>
+				<button id="alertModalClose" class="mt-6 w-full sm:w-auto px-8 py-3 bg-accent text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors duration-300" data-i18n="modal.close">Close</button>
+			</div>
+		</div>
+
+		<!-- Image Preview Modal -->
+		<div id="imageModal" class="modal hidden" role="dialog" aria-modal="true">
+			<div class="relative p-4" id="imageModalContent">
+				<img id="modalImage" src="" alt="Image Preview" class="max-w-[90vw] max-h-[90vh] rounded-lg shadow-2xl" oncontextmenu="return false;" />
+			</div>
+		</div>
+
+		<script src="assets/main.js"></script>
+		<script src="assets/i18n.js"></script>
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				document.getElementById('year').textContent = new Date().getFullYear();
+
+				// CV Download Modal Logic
+				const downloadBtn = document.getElementById('download-cv-btn');
+				const alertModal = document.getElementById('alertModal');
+				const alertModalCloseBtn = document.getElementById('alertModalClose');
+				const alertModalContent = document.getElementById('alertModalContent');
+
+				downloadBtn.addEventListener('click', () => {
+					alertModal.classList.remove('hidden');
+					document.body.style.overflow = 'hidden';
+				});
+
+				const closeModal = () => {
+					alertModal.classList.add('hidden');
+					document.body.style.overflow = '';
+				};
+
+				alertModalCloseBtn.addEventListener('click', closeModal);
+				alertModal.addEventListener('click', (e) => {
+					if (!alertModalContent.contains(e.target)) {
+						closeModal();
+					}
+				});
+
+				// Image Preview Modal Logic
+				const imageModal = document.getElementById('imageModal');
+				const modalImage = document.getElementById('modalImage');
+				const imageModalContent = document.getElementById('imageModalContent');
+
+				document.querySelectorAll('.preview-btn').forEach(btn => {
+					btn.addEventListener('click', (e) => {
+						const imgSrc = e.currentTarget.dataset.imgSrc;
+						if (imgSrc) {
+							modalImage.src = imgSrc;
+							imageModal.classList.remove('hidden');
+							document.body.style.overflow = 'hidden';
+						}
+					});
+				});
+
+				const closeImageModal = () => {
+					imageModal.classList.add('hidden');
+					document.body.style.overflow = '';
+				};
+
+				imageModal.addEventListener('click', (e) => { if (!imageModalContent.contains(e.target)) closeImageModal(); });
+
+				// PWA Service Worker Registration
+				if ('serviceWorker' in navigator) {
+					window.addEventListener('load', () => {
+						navigator.serviceWorker.register('/FullStack_CV_Portfolio/sw.js')
+							.then(registration => console.log('ServiceWorker registration successful with scope: ', registration.scope))
+							.catch(err => console.log('ServiceWorker registration failed: ', err));
+					});
+				}
+			});
+		</script>
+	</body>
+</html>
