@@ -46,7 +46,15 @@
             "provider": "Provider: ISEF",
             "date": "Date: 09 / 12 / 2025"
         },
-        "view": "View Certificate"
+        "cert3": {
+            "title": "Mohamed Ramadan | Web Systems Architect",
+            "provider": "Moti-Graph Company",
+            "description": "Certified graduate, specialized in web systems architecture and high-efficiency modern platform development.",
+            "date": "Date: 2024",
+            "image": "images/Certificates/moti-graph.gif"
+        },
+        "view": "View Certificate",
+        "viewOnline": "View Online"
     },
     "training": {
         "title": "Training & Professional Experience",
@@ -54,6 +62,12 @@
             "title": "Full Stack Training",
             "provider": "Provider: MTEC",
             "viewCompany": "View Company <i class='ri-external-link-line ml-1'></i>"
+        },
+        "motiGraph": {
+            "title": "Web Systems Architect",
+            "provider": "Moti-Graph Company",
+            "description": "Certified graduate and active team member, specializing in web systems architecture and high-efficiency modern platform development.",
+            "logo": "images/moti-graph.png"
         }
     },
     "projects": {
@@ -106,6 +120,17 @@
         "p3": {
             "title": "Wasel Food Delivery",
             "description": "End-to-end food delivery platform with multi-role access (Super Admin, Restaurant Admin, Customers), secure authentication, order lifecycle management, and commission system."
+        },
+        "p4": {
+            "title": "Moti-Graph Platform",
+            "description": "Architecture and development of the Moti-Graph official platform, focusing on performance and modern architecture.",
+            "image": "images/projects/moti-graph.png"
+        },
+        "p5": {
+            "title": "MTEC Official Website",
+            "description": "Design and development of the official MTEC IT company website (mtec-eg.com).",
+            "image": "images/projects/mtec.png",
+            "url": "https://mtec-eg.com/"
         }
     },
     "contact": {
