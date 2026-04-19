@@ -53,7 +53,15 @@
             "description": "المعرض الدولي للعلوم والهندسة.",
             "date": "التاريخ: 09 / 12 / 2025"
         },
-        "view": "عرض الشهادة",
+        "cert3": {
+            "title": "محمد رمضان | Web Systems Architect",
+            "provider": "شركة Moti-Graph",
+            "description": "خريج معتمد، متخصص في هندسة أنظمة الويب، وتطوير المنصات والمواقع الحديثة بكفاءة عالية.",
+            "date": "التاريخ: 2024",
+            "image": "images/Certificates/moti-graph.gif",
+            "view": "عرض الشهادة",
+            "viewOnline": "عرض الشهادة عبر الإنترنت"
+        },
         "learning": {
             "title": "مصادر التعلم والمراجع التقنية",
             "item1": "W3Schools — لمعايير الويب الأساسية والتوثيق.",
@@ -70,7 +78,13 @@
             "provider": "مقدم من: MTEC",
             "viewCompany": "عرض الشركة <i class='ri-external-link-line ml-1'></i>"
         },
-        "mtecDescription": "أكملت تدريبًا مكثفًا في MTEC - شركة برمجيات."
+        "mtecDescription": "أكملت تدريبًا مكثفًا في MTEC - شركة برمجيات.",
+        "motiGraph": {
+            "title": "مهندس أنظمة ويب (Web Systems Architect)",
+            "provider": "شركة Moti-Graph",
+            "description": "خريج معتمد وعضو في الفريق التقني، متخصص في هندسة أنظمة الويب، وتطوير المنصات والمواقع الحديثة بكفاءة عالية.",
+            "logo": "images/moti-graph.png"
+        }
     },
     "projects": {
         "title": "مشاريع مختارة",
@@ -122,6 +136,17 @@
         "p3": {
             "title": "مشروع واصل (توصيل طعام)",
             "description": "منصة توصيل طعام متكاملة مع وصول متعدد الأدوار (مسؤول عام، مدير مطعم، عملاء)، ومصادقة آمنة، وإدارة دورة حياة الطلب، ونظام عمولات."
+        },
+        "p4": {
+            "title": "منصة Moti-Graph",
+            "description": "تطوير وهندسة منصة Moti-Graph الرسمية، مع التركيز على الكفاءة العالية ومعايير الويب الحديثة.",
+            "image": "images/projects/moti-graph.png"
+        },
+        "p5": {
+            "title": "موقع شركة MTEC",
+            "description": "تصميم وتطوير الموقع الرسمي لشركة MTEC لتقنية المعلومات (mtec-eg.com).",
+            "image": "images/projects/mtec.png",
+            "url": "https://mtec-eg.com/"
         }
     },
     "contact": {
