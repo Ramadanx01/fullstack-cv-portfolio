@@ -27,7 +27,7 @@
 
 		<!-- PWA & Theme -->
 		<link rel="manifest" href="manifest.json">
-		<meta name="theme-color" content="#0f172a">
+		<meta name="theme-color" content="#0a0f1e">
 
 		<script src="https://cdn.tailwindcss.com"></script>
 		<script>
@@ -36,13 +36,26 @@
 				theme: {
 					extend: {
 						fontFamily: {
-							sans: ['Cairo', 'Inter', 'ui-sans-serif', 'system-ui'],
+							sans: ['Cairo', 'Plus Jakarta Sans', 'ui-sans-serif', 'system-ui'],
+							display: ['Plus Jakarta Sans', 'Cairo', 'ui-sans-serif'],
 						},
 						colors: {
-							primary: '#0f172a',     // slate-900
-							accent: '#2563eb',      // blue-600
-							accentSoft: '#dbeafe',  // blue-100
-							bgSoft: '#f8fafc'       // slate-50
+							primary: '#0a0f1e',
+							accent: '#3b82f6',
+							accentSoft: '#dbeafe',
+							accentVibrant: '#60a5fa',
+							bgSoft: '#f1f5f9',
+							surface: '#ffffff',
+						},
+						boxShadow: {
+							'glow': '0 0 30px rgba(59,130,246,0.15)',
+							'glow-lg': '0 0 60px rgba(59,130,246,0.2)',
+							'card': '0 4px 24px rgba(10,15,30,0.08)',
+							'card-hover': '0 12px 40px rgba(10,15,30,0.14)',
+						},
+						backgroundImage: {
+							'hero-gradient': 'radial-gradient(ellipse at 70% 50%, rgba(59,130,246,0.08) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(99,102,241,0.06) 0%, transparent 50%)',
+							'dark-hero': 'radial-gradient(ellipse at 70% 50%, rgba(59,130,246,0.12) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(99,102,241,0.08) 0%, transparent 50%)',
 						}
 					}
 				}
@@ -50,356 +63,666 @@
 		</script>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 		<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 		<link href="assets/rtl.css" rel="stylesheet">
 
 		<style>
-			/* Minimal custom styles for animation control */
-			html { scroll-behavior: smooth; }			
+			:root {
+				--accent: #3b82f6;
+				--accent-rgb: 59,130,246;
+			}
+			html { scroll-behavior: smooth; }
+
+			/* ── Animations ── */
 			.anim {
 				opacity: 0;
-				transform: translateY(20px); /* Less aggressive animation */
-				transition: opacity .6s ease, transform .6s cubic-bezier(.22,.61,.36,1);
+				transform: translateY(24px);
+				transition: opacity .65s ease, transform .65s cubic-bezier(.22,.61,.36,1);
 			}
-			.anim.in-view {
-				opacity: 1;
-				transform: translateY(0);
-			}
-			/* Custom class for better certificate image display */
-			.certificate-img {
-				height: 220px;
-				object-fit: cover;
-				border-radius: 12px;
-			}
-			/* Styles for the image preview modal */
-			.modal {
-				position: fixed;
-				z-index: 50;
-				left: 0;
-				top: 0;
-				width: 100%;
-				height: 100%;
-				overflow: auto;
-				background-color: rgba(0,0,0,0.85);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-			/* Styles for fixed navigation arrows */
-			.scroll-nav {
-				position: fixed;
-				right: 1rem;
-				bottom: 1rem;
-				z-index: 40;
-				display: flex;
-				flex-direction: column;
-				gap: 0.5rem;
-			}
-			.nav-active { color: #2563eb; } /* accent color */
+			.anim.in-view { opacity: 1; transform: translateY(0); }
 
-			/* Loading spinner animation */
-			@keyframes spin {
-				to { transform: rotate(360deg); }
+			/* ── Nav active ── */
+			.nav-active { color: #3b82f6; }
+
+			/* ── Hero gradient mesh ── */
+			.hero-mesh {
+				position: absolute; inset: 0; pointer-events: none; overflow: hidden;
 			}
+			.hero-mesh::before {
+				content: '';
+				position: absolute;
+				width: 600px; height: 600px;
+				top: -100px; right: -100px;
+				background: radial-gradient(circle, rgba(59,130,246,0.10) 0%, transparent 70%);
+				border-radius: 50%;
+				animation: float 8s ease-in-out infinite;
+			}
+			.hero-mesh::after {
+				content: '';
+				position: absolute;
+				width: 400px; height: 400px;
+				bottom: -80px; left: -80px;
+				background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
+				border-radius: 50%;
+				animation: float 10s ease-in-out infinite reverse;
+			}
+			@keyframes float {
+				0%, 100% { transform: translateY(0) scale(1); }
+				50% { transform: translateY(-30px) scale(1.05); }
+			}
+
+			/* ── Profile ring ── */
+			.profile-ring {
+				position: relative;
+			}
+			.profile-ring::before {
+				content: '';
+				position: absolute; inset: -4px;
+				border-radius: 50%;
+				background: conic-gradient(from 0deg, #3b82f6, #6366f1, #8b5cf6, #3b82f6);
+				animation: spin-slow 6s linear infinite;
+				z-index: 0;
+			}
+			.profile-ring > * { position: relative; z-index: 1; }
+			@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+			/* ── Gradient text ── */
+			.gradient-text {
+				background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+			}
+
+			/* ── Skill badge ── */
+			.skill-badge {
+				display: inline-flex; align-items: center; gap: 6px;
+				padding: 6px 14px;
+				border-radius: 9999px;
+				font-size: 0.82rem; font-weight: 600;
+				background: rgba(59,130,246,0.08);
+				border: 1px solid rgba(59,130,246,0.18);
+				color: #2563eb;
+				transition: all .2s ease;
+			}
+			.dark .skill-badge {
+				background: rgba(59,130,246,0.12);
+				border-color: rgba(59,130,246,0.25);
+				color: #93c5fd;
+			}
+			.skill-badge:hover {
+				background: rgba(59,130,246,0.15);
+				border-color: rgba(59,130,246,0.4);
+				transform: translateY(-1px);
+			}
+
+			/* ── Section divider ── */
+			.section-label {
+				display: inline-flex; align-items: center; gap: 8px;
+				font-size: 0.75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+				color: #3b82f6;
+				margin-bottom: 12px;
+			}
+			.section-label::before {
+				content: '';
+				display: block; width: 24px; height: 2px;
+				background: linear-gradient(90deg, #3b82f6, #6366f1);
+				border-radius: 2px;
+			}
+
+			/* ── Card base ── */
+			.card {
+				background: #fff;
+				border: 1px solid #e2e8f0;
+				border-radius: 20px;
+				box-shadow: 0 4px 24px rgba(10,15,30,0.07);
+				transition: box-shadow .25s ease, transform .25s ease, border-color .25s ease;
+			}
+			.dark .card {
+				background: #111827;
+				border-color: #1f2937;
+				box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+			}
+			.card:hover {
+				box-shadow: 0 12px 40px rgba(10,15,30,0.13);
+				transform: translateY(-3px);
+				border-color: rgba(59,130,246,0.3);
+			}
+			.dark .card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+
+			/* ── Timeline dot ── */
+			.timeline-dot {
+				width: 12px; height: 12px;
+				border-radius: 50%;
+				background: linear-gradient(135deg, #3b82f6, #6366f1);
+				box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+				flex-shrink: 0;
+			}
+
+			/* ── Btn primary ── */
+			.btn-primary {
+				display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+				padding: 12px 24px;
+				background: linear-gradient(135deg, #3b82f6, #6366f1);
+				color: #fff; font-weight: 600; font-size: 0.9rem;
+				border-radius: 12px;
+				box-shadow: 0 4px 16px rgba(59,130,246,0.35);
+				transition: all .25s ease;
+				border: none; cursor: pointer;
+			}
+			.btn-primary:hover {
+				box-shadow: 0 8px 24px rgba(59,130,246,0.5);
+				transform: translateY(-2px);
+			}
+
+			/* ── Btn ghost ── */
+			.btn-ghost {
+				display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+				padding: 11px 22px;
+				background: transparent;
+				color: #334155; font-weight: 600; font-size: 0.9rem;
+				border: 1.5px solid #cbd5e1;
+				border-radius: 12px;
+				transition: all .25s ease;
+				cursor: pointer;
+			}
+			.dark .btn-ghost { color: #cbd5e1; border-color: #374151; }
+			.btn-ghost:hover { background: #f1f5f9; border-color: #94a3b8; transform: translateY(-1px); }
+			.dark .btn-ghost:hover { background: #1f2937; border-color: #4b5563; }
+
+			/* ── Badge ── */
+			.badge {
+				display: inline-flex; align-items: center; gap: 4px;
+				padding: 3px 10px;
+				border-radius: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+			}
+			.badge-blue { background: rgba(59,130,246,0.1); color: #2563eb; border: 1px solid rgba(59,130,246,0.2); }
+			.dark .badge-blue { background: rgba(59,130,246,0.15); color: #93c5fd; border-color: rgba(59,130,246,0.3); }
+			.badge-purple { background: rgba(139,92,246,0.1); color: #7c3aed; border: 1px solid rgba(139,92,246,0.2); }
+			.dark .badge-purple { background: rgba(139,92,246,0.15); color: #c4b5fd; border-color: rgba(139,92,246,0.3); }
+
+			/* ── Scroll nav ── */
+			.scroll-nav {
+				position: fixed; right: 1.25rem; bottom: 1.25rem;
+				z-index: 40; display: flex; flex-direction: column; gap: .5rem;
+			}
+
+			/* ── Modal ── */
+			.modal {
+				position: fixed; z-index: 50; left: 0; top: 0;
+				width: 100%; height: 100%;
+				overflow: auto;
+				background-color: rgba(0,0,0,0.88);
+				display: flex; align-items: center; justify-content: center;
+				backdrop-filter: blur(4px);
+			}
+
+			/* ── Project image overlay ── */
+			.project-img-wrap { position: relative; overflow: hidden; border-radius: 12px; }
+			.project-img-wrap::after {
+				content: '';
+				position: absolute; inset: 0;
+				background: linear-gradient(to bottom, transparent 50%, rgba(10,15,30,0.5) 100%);
+				opacity: 0; transition: opacity .25s ease;
+			}
+			.card:hover .project-img-wrap::after { opacity: 1; }
+
+			/* ── Loading spinner ── */
+			@keyframes spin { to { transform: rotate(360deg); } }
 			.is-loading { animation: spin 0.8s linear infinite; }
+
+			/* ── Certificate card width fix ── */
+			#certificates-grid article { width: 100%; max-width: 320px; }
+
+			/* ── Noise texture overlay ── */
+			.noise-overlay {
+				position: absolute; inset: 0; pointer-events: none; opacity: .025;
+				background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+			}
 		</style>
 
 	</head>
-	<body class="bg-bgSoft dark:bg-slate-900 text-primary antialiased leading-relaxed">
+	<body class="bg-bgSoft dark:bg-[#070d1a] text-primary antialiased leading-relaxed">
 
-		<header id="main-header" class="sticky top-0 bg-white/80 backdrop-blur z-40 border-b border-slate-100 shadow-sm dark:bg-slate-900/80 dark:border-slate-800 transition-transform duration-300">
-			<div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+		<header id="main-header" class="sticky top-0 bg-white/80 dark:bg-[#070d1a]/85 backdrop-blur-xl z-40 border-b border-slate-100/80 dark:border-white/5 transition-transform duration-300">
+			<div class="max-w-6xl mx-auto px-5 py-3.5 flex items-center justify-between">
 				<div class="flex items-center gap-3">
-					<div class="relative w-8 h-8 rounded-full bg-cover bg-center cursor-pointer preview-btn" style="background-image: url('images/profile1.jpg');" data-img-src="images/profile1.jpg">
-						<div class="absolute inset-0 pointer-events-none"></div>
+					<div class="relative profile-ring w-9 h-9 flex-shrink-0 cursor-pointer preview-btn" data-img-src="images/profile1.jpg">
+						<div class="w-full h-full rounded-full bg-cover bg-center overflow-hidden" style="background-image: url('images/profile1.jpg');"></div>
 					</div>
-					<a href="#hero" class="font-bold text-xl text-accent dark:text-blue-400">Ramadanx01</a>
+					<a href="#hero" class="font-bold text-lg gradient-text">Ramadanx01</a>
 				</div>
-				<div class="flex items-center gap-4">
-					<nav class="hidden md:flex gap-6 items-center text-sm font-medium text-slate-700 dark:text-slate-300">
-						<a href="#about" class="hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.about">About</a>
-						<a href="#skills" class="hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.skills">Skills</a>
-						<a href="#certificates" class="hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.certificates">Certificates</a>
-						<a href="#projects" class="hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.projects">Projects</a>
-						<a href="#contact" class="hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.contact">Contact</a>
+				<div class="flex items-center gap-3">
+					<nav class="hidden md:flex gap-1 items-center text-sm font-medium text-slate-600 dark:text-slate-400">
+						<a href="#about" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.about">About</a>
+						<a href="#skills" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.skills">Skills</a>
+						<a href="#certificates" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.certificates">Certificates</a>
+						<a href="#projects" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.projects">Projects</a>
+						<a href="#contact" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 hover:text-accent dark:hover:text-blue-400 transition duration-200 nav-link" data-i18n="nav.contact">Contact</a>
 					</nav>
 					<!-- Language Dropdown -->
 					<div class="relative">
-						<button id="lang-toggle-btn" class="p-2 rounded-lg text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Open language menu">
-							<i class="ri-translate-2 text-xl"></i>
+						<button id="lang-toggle-btn" class="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition" aria-label="Open language menu">
+							<i class="ri-translate-2 text-lg"></i>
 						</button>
-						<div id="lang-menu" class="hidden absolute right-0 mt-2 w-36 bg-white dark:bg-slate-800 rounded-lg shadow-xl border dark:border-slate-700 p-2 z-50">
-							<button data-lang="en" class="lang-option w-full text-left px-3 py-2 text-sm rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 dark:text-slate-200">English (EN)</button>
-							<button data-lang="ar" class="lang-option w-full text-left px-3 py-2 text-sm rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 dark:text-slate-200">العربية (AR)</button>
+						<div id="lang-menu" class="hidden absolute right-0 mt-2 w-36 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-100 dark:border-white/10 p-1.5 z-50">
+							<button data-lang="en" class="lang-option w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 dark:text-slate-300 transition">English (EN)</button>
+							<button data-lang="ar" class="lang-option w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 dark:text-slate-300 transition">العربية (AR)</button>
 						</div>
 					</div>
-
 					<!-- Theme Toggle -->
-					<button id="theme-toggle" class="p-2 rounded-lg text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Toggle theme">
-						<i class="ri-sun-line text-xl" id="theme-icon-light"></i>
-						<i class="ri-moon-line text-xl hidden" id="theme-icon-dark"></i>
+					<button id="theme-toggle" class="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition" aria-label="Toggle theme">
+						<i class="ri-sun-line text-lg" id="theme-icon-light"></i>
+						<i class="ri-moon-line text-lg hidden" id="theme-icon-dark"></i>
 					</button>
 					<div class="md:hidden">
-						<button id="menuBtn" aria-label="Open menu" class="p-2 rounded-lg text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"><i class="ri-menu-3-line text-xl"></i></button>
+						<button id="menuBtn" aria-label="Open menu" class="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition"><i class="ri-menu-3-line text-lg"></i></button>
 					</div>
 				</div>
 			</div>
 		</header>
 
 		<!-- Mobile Sidebar -->
-		<div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden md:hidden"></div>
-		<nav id="mobileNav" class="fixed top-0 right-0 h-full w-64 bg-white dark:bg-slate-900 shadow-lg p-5 z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+		<div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden md:hidden"></div>
+		<nav id="mobileNav" class="fixed top-0 right-0 h-full w-72 bg-white dark:bg-[#0d1322] shadow-2xl p-6 z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden border-l border-slate-100 dark:border-white/5">
 			<div class="flex justify-between items-center mb-8">
-				<span class="font-bold text-lg text-accent dark:text-blue-400">Menu</span>
-				<button id="closeMenuBtn" aria-label="Close menu" class="p-2 rounded-lg text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"><i class="ri-close-line text-xl"></i></button>
+				<span class="font-bold text-lg gradient-text">Menu</span>
+				<button id="closeMenuBtn" aria-label="Close menu" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-white/5 transition"><i class="ri-close-line text-xl"></i></button>
 			</div>
-			<a href="#about" class="block p-3 rounded-lg hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800" data-i18n="nav.about">About</a>
-			<a href="#skills" class="block p-3 rounded-lg hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 nav-link" data-i18n="nav.skills">Skills</a>
-			<a href="#certificates" class="block p-3 rounded-lg hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 nav-link" data-i18n="nav.certificates">Certificates</a>
-			<a href="#projects" class="block p-3 rounded-lg hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 nav-link" data-i18n="nav.projects">Projects</a>
-			<a href="#contact" class="block p-3 rounded-lg hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 nav-link" data-i18n="nav.contact">Contact</a>
+			<div class="space-y-1">
+				<a href="#about" class="block p-3 rounded-xl hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5 font-medium transition" data-i18n="nav.about">About</a>
+				<a href="#skills" class="block p-3 rounded-xl hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5 font-medium transition nav-link" data-i18n="nav.skills">Skills</a>
+				<a href="#certificates" class="block p-3 rounded-xl hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5 font-medium transition nav-link" data-i18n="nav.certificates">Certificates</a>
+				<a href="#projects" class="block p-3 rounded-xl hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5 font-medium transition nav-link" data-i18n="nav.projects">Projects</a>
+				<a href="#contact" class="block p-3 rounded-xl hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5 font-medium transition nav-link" data-i18n="nav.contact">Contact</a>
+			</div>
 		</nav>
 
 		<main class="text-primary" id="main-content">
-			<section id="hero" class="min-h-[85vh] flex items-center bg-white dark:bg-slate-900 text-center md:text-left">
-				<div class="max-w-6xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-2 items-center">
-					
-					<!-- Text Content (always first on mobile, first column on desktop) -->
-					<div class="space-y-6 order-1 anim dark:text-slate-200" data-animate>
-						<p class="text-sm text-accent font-semibold tracking-wider uppercase" data-i18n="hero.jobTitle">Full Stack Web Developer</p>
-						
-						<!-- Container for Image + Name on Mobile -->
-						<div class="flex items-center gap-4 md:block">
-							<div class="md:hidden relative w-20 h-20 rounded-full shadow-lg border-2 border-accent/20 flex-shrink-0 cursor-pointer preview-btn bg-cover bg-center" style="background-image: url('images/profile1.jpg');" data-img-src="images/profile1.jpg">
-								<div class="absolute inset-0 pointer-events-none"></div>
+
+			<!-- ═══════════ HERO ═══════════ -->
+			<section id="hero" class="relative min-h-[90vh] flex items-center bg-white dark:bg-[#070d1a] overflow-hidden">
+				<div class="hero-mesh dark:opacity-100 opacity-60"></div>
+				<div class="noise-overlay"></div>
+				<div class="relative max-w-6xl mx-auto px-6 py-16 grid gap-12 md:grid-cols-2 items-center w-full z-10">
+					<!-- Text -->
+					<div class="space-y-7 order-1 anim" data-animate>
+						<div>
+							<p class="section-label" data-i18n="hero.jobTitle">Full-Stack Web Developer — System Builder</p>
+							<div class="flex items-center gap-5 md:block">
+								<div class="md:hidden relative profile-ring w-20 h-20 flex-shrink-0 cursor-pointer preview-btn" data-img-src="images/profile1.jpg">
+									<div class="w-full h-full rounded-full bg-cover bg-center overflow-hidden" style="background-image: url('images/profile1.jpg');"></div>
+								</div>
+								<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 dark:text-white leading-[1.05] tracking-tight" data-i18n="hero.name">Mohamad Ramadan</h1>
 							</div>
-							<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary dark:text-white" data-i18n="hero.name">Mohamad Ramadan</h1>
 						</div>
-
-						<p class="text-slate-700 dark:text-slate-300 max-w-xl" data-i18n="hero.description">Full Stack Web Developer specialized in building complete real-world systems from scratch, including authentication, role-based access, dashboards, and business logic. Comfortable across frontend and backend stacks.</p>
-
-						<div class="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
-							<a href="#projects" class="px-6 py-3 bg-accent text-white font-semibold rounded-xl text-sm shadow-lg shadow-accent/30 hover:bg-blue-700 dark:shadow-blue-900/40 transition-colors duration-300 transform hover:scale-[1.02]" data-i18n="hero.viewProjects">View Projects</a>
-							<a href="#contact" class="px-6 py-3 border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 font-semibold rounded-xl text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300" data-i18n="hero.contactMe">Contact Me</a>
-							<button id="download-cv-btn" class="px-4 py-3 border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 rounded-xl text-sm flex items-center gap-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300"><i class="ri-download-2-line"></i> <span data-i18n="hero.downloadCV">Download CV</span></button>
-							<a href="https://github.com/Ramadanx01" target="_blank" rel="noopener" class="px-4 py-3 border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 rounded-xl text-sm flex items-center gap-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300"><i class="ri-github-line"></i> <span data-i18n="hero.github">GitHub</span></a>
+						<p class="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed" data-i18n="hero.description">Full Stack Web Developer specialized in building production-ready systems from scratch, including authentication, multi-role dashboards, and real business logic.</p>
+						<div class="flex flex-wrap justify-center md:justify-start gap-3 pt-1">
+							<a href="#projects" class="btn-primary" data-i18n="hero.viewProjects">View Featured Projects</a>
+							<a href="#contact" class="btn-ghost" data-i18n="hero.contactMe">Contact Me</a>
+							<button id="download-cv-btn" class="btn-ghost"><i class="ri-download-2-line"></i> <span data-i18n="hero.downloadCV">Download CV</span></button>
+							<a href="https://github.com/Ramadanx01" target="_blank" rel="noopener" class="btn-ghost"><i class="ri-github-line"></i> <span data-i18n="hero.github">GitHub</span></a>
 						</div>
 					</div>
-
-					<!-- Image Content (always second on mobile, second column on desktop) -->
+					<!-- Image -->
 					<div class="hidden md:flex justify-center order-2 anim" data-animate>
-						<div class="relative w-48 h-48 md:w-80 md:h-80 rounded-full shadow-xl border-4 border-accent/20 flex-shrink-0 cursor-pointer preview-btn bg-cover bg-center" id="hero-image-container" style="background-image: url('images/profile1.jpg');" data-img-src="images/profile1.jpg">
-							<div class="absolute inset-0 pointer-events-none"></div>
+						<div class="relative">
+							<div class="absolute inset-0 blur-3xl bg-blue-500/20 dark:bg-blue-500/30 rounded-full scale-110"></div>
+							<div class="relative profile-ring w-64 h-64 lg:w-80 lg:h-80 cursor-pointer preview-btn" id="hero-image-container" data-img-src="images/profile1.jpg">
+								<div class="w-full h-full rounded-full bg-cover bg-center overflow-hidden shadow-2xl" style="background-image: url('images/profile1.jpg');"></div>
+							</div>
 						</div>
 					</div>
 				</div>
+				<!-- Scroll indicator -->
+				<div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40 dark:opacity-30 animate-bounce">
+					<div class="w-px h-8 bg-slate-400 dark:bg-slate-600"></div>
+					<i class="ri-arrow-down-s-line text-slate-400 dark:text-slate-600 text-lg"></i>
+				</div>
 			</section>
 
-			<section id="advanced" class="py-20 bg-white dark:bg-slate-900">
+			<!-- ═══════════ FEATURED PROJECTS ═══════════ -->
+			<section id="advanced" class="py-24 bg-bgSoft dark:bg-[#0a1020]">
 				<div class="max-w-6xl mx-auto px-6">
-					<h2 class="text-3xl font-bold text-primary dark:text-white anim" data-animate data-i18n="advanced.title">Featured Professional Projects</h2>
-					<div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+					<div class="anim" data-animate>
+						<p class="section-label">Professional Work</p>
+						<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white" data-i18n="advanced.title">Featured Professional Projects</h2>
+					</div>
+					<div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 						<!-- Moti-Graph Platform -->
-						<article class="bg-bgSoft dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col border border-slate-100 dark:border-slate-700 anim preview-btn cursor-pointer" data-animate data-img-src="images/projects/moti-graph.png">
-							<div class="flex-grow">
-								<div class="relative w-full h-44 rounded-xl mb-5 border border-slate-200 dark:border-slate-700 bg-cover bg-center" style="background-image: url('images/projects/moti-graph.png');">
-									<div class="absolute inset-0 pointer-events-none"></div>
-								</div>
-								<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="advanced.p4.title">Moti-Graph Platform</h4>
-								<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 mb-4" data-i18n="advanced.p4.description">Architecture and development of the Moti-Graph official platform, focusing on performance and modern architecture.</p>
+						<article class="card p-0 flex flex-col overflow-hidden anim preview-btn cursor-pointer" data-animate data-img-src="images/projects/moti-graph.png">
+							<div class="project-img-wrap h-48">
+								<div class="relative w-full h-full bg-cover bg-center" style="background-image: url('images/projects/moti-graph.png');"></div>
 							</div>
-							<div class="mt-auto pt-3 flex items-center gap-4">
-								<a href="https://moti-graph.com/index.php" target="_blank" rel="noopener" class="text-sm font-semibold text-accent dark:text-blue-400 hover:underline" data-i18n="projects.liveDemo">
-									Live Demo <i class="ri-external-link-line ml-1"></i>
-								</a>
+							<div class="p-5 flex flex-col flex-grow">
+								<div class="flex items-start justify-between gap-2 mb-2">
+									<h4 class="font-bold text-lg text-slate-900 dark:text-white" data-i18n="advanced.p4.title">Moti-Graph Platform</h4>
+									<span class="badge badge-blue flex-shrink-0" data-i18n="advanced.badgeSystem">Production</span>
+								</div>
+								<p class="text-sm text-slate-500 dark:text-slate-400 flex-grow leading-relaxed" data-i18n="advanced.p4.description">Architecture and development of the Moti-Graph official platform, focusing on performance and modern architecture.</p>
+								<div class="mt-4 pt-4 border-t border-slate-100 dark:border-white/5 flex items-center gap-3">
+									<a href="https://moti-graph.com/index.php" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition" data-i18n="projects.liveDemo">Live Demo <i class="ri-external-link-line"></i></a>
+								</div>
 							</div>
 						</article>
 						<!-- MTEC Official Website -->
-						<article class="bg-bgSoft dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col border border-slate-100 dark:border-slate-700 anim preview-btn cursor-pointer" data-animate data-img-src="images/projects/mtec.png">
-							<div class="flex-grow">
-								<div class="relative w-full h-44 rounded-xl mb-5 border border-slate-200 dark:border-slate-700 bg-cover bg-center" style="background-image: url('images/projects/mtec.png');">
-									<div class="absolute inset-0 pointer-events-none"></div>
-								</div>
-								<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="advanced.p5.title">MTEC Official Website</h4>
-								<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 mb-4" data-i18n="advanced.p5.description">Design and development of the official MTEC IT company website (mtec-eg.com).</p>
+						<article class="card p-0 flex flex-col overflow-hidden anim preview-btn cursor-pointer" data-animate data-img-src="images/projects/mtec.png">
+							<div class="project-img-wrap h-48">
+								<div class="relative w-full h-full bg-cover bg-center" style="background-image: url('images/projects/mtec.png');"></div>
 							</div>
-							<div class="mt-auto pt-3 flex items-center gap-4">
-								<a href="https://mtec-eg.com/" target="_blank" rel="noopener" class="text-sm font-semibold text-accent dark:text-blue-400 hover:underline" data-i18n="projects.liveDemo">
-									Live Demo <i class="ri-external-link-line ml-1"></i>
-								</a>
+							<div class="p-5 flex flex-col flex-grow">
+								<div class="flex items-start justify-between gap-2 mb-2">
+									<h4 class="font-bold text-lg text-slate-900 dark:text-white" data-i18n="advanced.p5.title">MTEC Official Website</h4>
+									<span class="badge badge-blue flex-shrink-0" data-i18n="advanced.badgeSystem">Production</span>
+								</div>
+								<p class="text-sm text-slate-500 dark:text-slate-400 flex-grow leading-relaxed" data-i18n="advanced.p5.description">Design and development of the official MTEC IT company website (mtec-eg.com).</p>
+								<div class="mt-4 pt-4 border-t border-slate-100 dark:border-white/5 flex items-center gap-3">
+									<a href="https://mtec-eg.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition" data-i18n="projects.liveDemo">Live Demo <i class="ri-external-link-line"></i></a>
+								</div>
 							</div>
 						</article>
 						<!-- Wasel Food Delivery -->
-						<article class="bg-bgSoft dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col border border-slate-100 dark:border-slate-700 anim" data-animate>
-							<div class="flex-grow">
-								<div class="flex items-center gap-4 mb-4 h-12">
-									<img src="images/projects_backend/wasel.png" alt="Wasel Logo" class="h-full object-contain" />
-									<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="advanced.p3.title">Wasel Food Delivery</h4>
-								</div>								
-								<p class="text-sm text-slate-600 dark:text-slate-400 mb-4" data-i18n="advanced.p3.description">End-to-end food delivery platform with multi-role access (Super Admin, Restaurant Admin, Customers), secure authentication, order lifecycle management, and commission system.</p>
+						<article class="card p-5 flex flex-col anim" data-animate>
+							<div class="flex items-center gap-3 mb-4">
+								<img src="images/projects_backend/wasel.png" alt="Wasel Logo" class="h-10 object-contain" />
+								<div>
+									<h4 class="font-bold text-lg text-slate-900 dark:text-white leading-tight" data-i18n="advanced.p3.title">Wasel Food Delivery</h4>
+									<span class="badge badge-blue mt-1" data-i18n="advanced.badgeSystem">Production</span>
+								</div>
 							</div>
-							<a href="https://github.com/Ramadanx01/Wasel_website" target="_blank" rel="noopener" class="mt-auto inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 text-sm rounded-lg bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition"><i class="ri-github-line"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
+							<p class="text-sm text-slate-500 dark:text-slate-400 flex-grow leading-relaxed" data-i18n="advanced.p3.description">End-to-end food delivery platform with multi-role access (Super Admin, Restaurant Admin, Customers), secure authentication, order lifecycle management, and commission system.</p>
+							<a href="https://github.com/Ramadanx01/Wasel_website" target="_blank" rel="noopener" class="mt-4 btn-ghost text-sm py-2.5 px-4"><i class="ri-github-line"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
 						</article>
 						<!-- Korsaty -->
-						<article class="bg-bgSoft dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col border border-slate-100 dark:border-slate-700 anim" data-animate>
-							<div class="flex-grow">
-								<div class="flex items-center gap-4 mb-4 h-12">
-									<img src="images/projects_backend/korsty.png" alt="Korsaty Logo" class="h-full object-contain" />
-									<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="advanced.p1.title">Korsaty (Udemy Competitor)</h4>
+						<article class="card p-5 flex flex-col anim" data-animate>
+							<div class="flex items-center gap-3 mb-4">
+								<img src="images/projects_backend/korsty.png" alt="Korsaty Logo" class="h-10 object-contain" />
+								<div>
+									<h4 class="font-bold text-lg text-slate-900 dark:text-white leading-tight" data-i18n="advanced.p1.title">Korsaty (Udemy Competitor)</h4>
+									<span class="badge badge-purple mt-1" data-i18n="advanced.badgeCommercial">Commercial</span>
 								</div>
-								<p class="text-sm text-slate-600 dark:text-slate-400 mb-4" data-i18n="advanced.p1.description">A significant PHP-based educational platform, currently in development.</p>
 							</div>
-							<a href="https://github.com/Ramadanx01/Korsaty" target="_blank" rel="noopener" class="mt-auto inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 text-sm rounded-lg bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition"><i class="ri-github-line"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
+							<p class="text-sm text-slate-500 dark:text-slate-400 flex-grow leading-relaxed" data-i18n="advanced.p1.description">A complete educational platform featuring multi-role access (Admin, Instructor, Student), course management, and content delivery systems, built with a focus on scalability.</p>
+							<a href="https://github.com/Ramadanx01/Korsaty" target="_blank" rel="noopener" class="mt-4 btn-ghost text-sm py-2.5 px-4"><i class="ri-github-line"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
 						</article>
 						<!-- Sab3awy -->
-						<article class="bg-bgSoft dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col border border-slate-100 dark:border-slate-700 anim" data-animate>
-							<div class="flex-grow">
-								<div class="flex items-center gap-4 mb-4 h-12">
-									<img src="images/projects_backend/sab3awy.png" alt="Sab3awy Logo" class="h-full object-contain" />
-									<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="advanced.p2.title">Sab3awy Clothing System</h4>
+						<article class="card p-5 flex flex-col anim" data-animate>
+							<div class="flex items-center gap-3 mb-4">
+								<img src="images/projects_backend/sab3awy.png" alt="Sab3awy Logo" class="h-10 object-contain" />
+								<div>
+									<h4 class="font-bold text-lg text-slate-900 dark:text-white leading-tight" data-i18n="advanced.p2.title">Sab3awy Clothing System</h4>
+									<span class="badge badge-purple mt-1" data-i18n="advanced.badgeCommercial">Commercial</span>
 								</div>
-								<p class="text-sm text-slate-600 dark:text-slate-400 mb-4" data-i18n="advanced.p2.description">A full management system undergoing migration to a modern React & Laravel stack.</p>
 							</div>
-							<a href="https://github.com/Ramadanx01/sab3awy" target="_blank" rel="noopener" class="mt-auto inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 text-sm rounded-lg bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition"><i class="ri-github-line"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
+							<p class="text-sm text-slate-500 dark:text-slate-400 flex-grow leading-relaxed" data-i18n="advanced.p2.description">An end-to-end management system for a clothing business, handling inventory, sales, and reporting. Currently undergoing a strategic migration to a modern React & Laravel stack.</p>
+							<a href="https://github.com/Ramadanx01/sab3awy" target="_blank" rel="noopener" class="mt-4 btn-ghost text-sm py-2.5 px-4"><i class="ri-github-line"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
 						</article>
 					</div>
 				</div>
 			</section>
 
-			<section id="training" class="py-20 bg-bgSoft dark:bg-slate-800">
+			<!-- ═══════════ TRAINING ═══════════ -->
+			<section id="training" class="py-24 bg-white dark:bg-[#070d1a]">
 				<div class="max-w-6xl mx-auto px-6">
-					<h2 class="text-3xl font-bold text-primary dark:text-white mb-8 anim" data-animate data-i18n="training.title">Training & Professional Experience</h2>
-					<div class="mt-6 flex justify-center">
-						<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-5 border border-slate-100 dark:border-slate-800 anim flex flex-col max-w-sm preview-btn cursor-pointer" data-animate data-img-src="images/MTEC-Software Company.png">
-							<div class="relative w-full h-[220px] rounded-xl mb-5 border border-slate-200 dark:border-slate-700 bg-contain bg-no-repeat bg-center" style="background-image: url('images/MTEC-Software Company.png');">
-								<div class="absolute inset-0 pointer-events-none"></div>
+					<div class="anim" data-animate>
+						<p class="section-label">Experience</p>
+						<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white" data-i18n="training.title">Training & Professional Experience</h2>
+					</div>
+					<div class="mt-12 flex flex-wrap justify-center gap-6">
+						<article class="card p-0 overflow-hidden max-w-sm w-full anim preview-btn cursor-pointer flex flex-col" data-animate data-img-src="images/MTEC-Software Company.png">
+							<div class="relative w-full h-52 bg-contain bg-no-repeat bg-center bg-slate-50 dark:bg-slate-900" style="background-image: url('images/MTEC-Software Company.png');"></div>
+							<div class="p-5 flex flex-col flex-grow">
+								<h4 class="font-bold text-lg text-slate-900 dark:text-white" data-i18n="training.mtec.title">Full Stack Training</h4>
+								<p class="text-sm text-slate-500 dark:text-slate-400 mt-1" data-i18n="training.mtec.description">Completed intensive training at MTEC - Software Company.</p>
+								<div class="mt-4 pt-4 border-t border-slate-100 dark:border-white/5">
+									<a href="https://mtec-eg.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:underline">Website <i class="ri-external-link-line"></i></a>
+								</div>
 							</div>
-							<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="training.mtec.title">Full Stack Training</h4>
-							<p class="text-sm text-slate-600 dark:text-slate-400 mt-1" data-i18n="training.mtec.description">Completed intensive training at MTEC - Software Company.</p>
-							<div class="mt-auto pt-3 flex items-center gap-4">
-								<a href="https://mtec-eg.com/" target="_blank" rel="noopener" class="text-sm font-semibold text-accent dark:text-blue-400 hover:underline">
-									Website <i class="ri-external-link-line ml-1"></i>
-								</a>
+						</article>
+						<article class="card p-5 max-w-sm w-full anim flex flex-col" data-animate>
+							<div class="flex items-center gap-4 mb-4">
+								<img src="images/moti-graph.png" alt="Moti-Graph Logo" class="h-12 object-contain" />
+								<h4 class="font-bold text-lg text-slate-900 dark:text-white" data-i18n="training.motiGraph.title">Web Systems Architect</h4>
+							</div>
+							<p class="text-sm text-slate-500 dark:text-slate-400 flex-grow leading-relaxed" data-i18n="training.motiGraph.description">Certified graduate and active team member, specializing in web systems architecture and high-efficiency modern platform development.</p>
+							<div class="mt-4 pt-4 border-t border-slate-100 dark:border-white/5 flex gap-4">
+								<a href="https://moti-graph.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:underline">Website <i class="ri-external-link-line"></i></a>
+								<a href="https://moti-graph.com/index.php" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:underline">Certificate <i class="ri-external-link-line"></i></a>
+							</div>
+						</article>
+					</div>
+				</div>
+			</section>
+
+			<!-- ═══════════ ABOUT ═══════════ -->
+			<section id="about" class="py-24 bg-bgSoft dark:bg-[#0a1020]">
+				<div class="max-w-6xl mx-auto px-6">
+					<div class="grid md:grid-cols-2 gap-14 items-start">
+						<div class="anim" data-animate>
+							<p class="section-label">About</p>
+							<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white" data-i18n="about.title">About Me</h2>
+							<p class="mt-5 text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="about.description">I am a Full Stack Web Developer who builds practical systems end-to-end. I enjoy taking concepts from idea to production and solving real problems with clean, maintainable code.</p>
+							<p class="mt-4 text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="about.additionalDescription">I focus on system-level development, working with authentication flows, admin dashboards, database design, and real business requirements. I have hands-on experience converting Figma designs into functional applications.</p>
+							<div class="mt-6 flex flex-wrap gap-2">
+								<span class="skill-badge"><i class="ri-links-line text-xs"></i> <a href="https://w3schools.com" target="_blank" rel="noopener" data-i18n="about.ref1">W3Schools</a></span>
+								<span class="skill-badge"><i class="ri-links-line text-xs"></i> <a href="https://code2z.netlify.app" target="_blank" rel="noopener" data-i18n="about.ref2">code2z.netlify.app</a></span>
+								<span class="skill-badge"><i class="ri-telegram-line text-xs"></i> <a href="https://t.me/codeDarija" target="_blank" rel="noopener" data-i18n="about.ref3">t.me/codeDarija</a></span>
+							</div>
+						</div>
+						<!-- What I Build -->
+						<div class="anim" data-animate>
+							<p class="section-label">Capabilities</p>
+							<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-5" data-i18n="whatIBuild.title">What I Build</h3>
+							<div class="space-y-3">
+								<div class="flex items-start gap-3 p-4 rounded-xl bg-white dark:bg-[#111827] border border-slate-100 dark:border-white/5">
+									<div class="timeline-dot mt-1.5"></div>
+									<span class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed" data-i18n="whatIBuild.point1">Full management systems (Admin / User roles)</span>
+								</div>
+								<div class="flex items-start gap-3 p-4 rounded-xl bg-white dark:bg-[#111827] border border-slate-100 dark:border-white/5">
+									<div class="timeline-dot mt-1.5"></div>
+									<span class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed" data-i18n="whatIBuild.point2">Authentication & verification systems (OTP)</span>
+								</div>
+								<div class="flex items-start gap-3 p-4 rounded-xl bg-white dark:bg-[#111827] border border-slate-100 dark:border-white/5">
+									<div class="timeline-dot mt-1.5"></div>
+									<span class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed" data-i18n="whatIBuild.point3">Dashboards & control panels</span>
+								</div>
+								<div class="flex items-start gap-3 p-4 rounded-xl bg-white dark:bg-[#111827] border border-slate-100 dark:border-white/5">
+									<div class="timeline-dot mt-1.5"></div>
+									<span class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed" data-i18n="whatIBuild.point4">Real-world business applications</span>
+								</div>
+								<div class="flex items-start gap-3 p-4 rounded-xl bg-white dark:bg-[#111827] border border-slate-100 dark:border-white/5">
+									<div class="timeline-dot mt-1.5"></div>
+									<span class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed" data-i18n="whatIBuild.point5">Scalable frontend & backend structures</span>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="mt-6 flex justify-center">
-						<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-5 border border-slate-100 dark:border-slate-800 anim flex flex-col max-w-sm" data-animate>
-							<div class="flex items-center gap-4 mb-4">
-								<img src="images/moti-graph.png" alt="Moti-Graph Logo" class="h-12 object-contain" />
-								<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="training.motiGraph.title">Web Systems Architect</h4>
+				</div>
+			</section>
+
+			<!-- ═══════════ SKILLS ═══════════ -->
+			<section id="skills" class="py-24 bg-white dark:bg-[#070d1a]">
+				<div class="max-w-6xl mx-auto px-6">
+					<div class="anim" data-animate>
+						<p class="section-label">Tech</p>
+						<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white" data-i18n="skills.title">Tech Stack</h2>
+					</div>
+					<div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+						<!-- Frontend -->
+						<div class="card p-5 anim" data-animate>
+							<div class="flex items-center gap-3 mb-4">
+								<div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
+									<i class="ri-layout-4-line text-blue-500 text-xl"></i>
+								</div>
+								<h3 class="font-bold text-slate-900 dark:text-white">Frontend</h3>
 							</div>
-							<p class="text-sm text-slate-600 dark:text-slate-400 mt-1" data-i18n="training.motiGraph.description">Certified graduate and active team member, specializing in web systems architecture and high-efficiency modern platform development.</p>
-							<div class="mt-auto pt-3 flex items-center gap-4">
-								<a href="https://moti-graph.com/" target="_blank" rel="noopener" class="text-sm font-semibold text-accent dark:text-blue-400 hover:underline">
-									Website <i class="ri-external-link-line ml-1"></i>
-								</a>
-								<a href="https://moti-graph.com/index.php" target="_blank" rel="noopener" class="text-sm font-semibold text-accent dark:text-blue-400 hover:underline">
-									Certificate <i class="ri-external-link-line ml-1"></i>
-								</a>
+							<div class="flex flex-wrap gap-2">
+								<span class="skill-badge">HTML</span>
+								<span class="skill-badge">CSS</span>
+								<span class="skill-badge">JavaScript</span>
+								<span class="skill-badge">React</span>
+								<span class="skill-badge">Tailwind CSS</span>
+								<span class="skill-badge">Bootstrap</span>
+								<span class="skill-badge">TypeScript</span>
+								<span class="skill-badge">Vite</span>
 							</div>
-						</article>
+						</div>
+						<!-- Backend -->
+						<div class="card p-5 anim" data-animate>
+							<div class="flex items-center gap-3 mb-4">
+								<div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center">
+									<i class="ri-server-line text-purple-500 text-xl"></i>
+								</div>
+								<h3 class="font-bold text-slate-900 dark:text-white">Backend</h3>
+							</div>
+							<div class="flex flex-wrap gap-2">
+								<span class="skill-badge">PHP</span>
+								<span class="skill-badge">Node.js</span>
+								<span class="skill-badge">MySQL</span>
+								<span class="skill-badge">Laravel</span>
+								<span class="skill-badge">REST APIs</span>
+								<span class="skill-badge">XAMPP</span>
+							</div>
+						</div>
+						<!-- Tools -->
+						<div class="card p-5 anim" data-animate>
+							<div class="flex items-center gap-3 mb-4">
+								<div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center">
+									<i class="ri-tools-line text-emerald-500 text-xl"></i>
+								</div>
+								<h3 class="font-bold text-slate-900 dark:text-white">Tools</h3>
+							</div>
+							<div class="flex flex-wrap gap-2">
+								<span class="skill-badge">Git</span>
+								<span class="skill-badge">GitHub</span>
+								<span class="skill-badge">Figma</span>
+								<span class="skill-badge">VS Code</span>
+								<span class="skill-badge">Deployment</span>
+							</div>
+						</div>
+						<!-- Core Skills -->
+						<div class="card p-5 anim" data-animate>
+							<div class="flex items-center gap-3 mb-4">
+								<div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-900/20 flex items-center justify-center">
+									<i class="ri-shield-keyhole-line text-amber-500 text-xl"></i>
+								</div>
+								<h3 class="font-bold text-slate-900 dark:text-white">Core Skills</h3>
+							</div>
+							<div class="flex flex-wrap gap-2">
+								<span class="skill-badge">Auth / OTP</span>
+								<span class="skill-badge">RBAC</span>
+								<span class="skill-badge">DB Design</span>
+								<span class="skill-badge">System Design</span>
+								<span class="skill-badge">Figma → Code</span>
+							</div>
+						</div>
 					</div>
 				</div>
 			</section>
 
-			<section id="certificates" class="py-20 bg-white dark:bg-slate-900">
+			<!-- ═══════════ CERTIFICATES ═══════════ -->
+			<section id="certificates" class="py-24 bg-bgSoft dark:bg-[#0a1020]">
 				<div class="max-w-6xl mx-auto px-6">
-					<h2 class="text-3xl font-bold text-primary dark:text-white mb-8 anim" data-animate data-i18n="certificates.title">Certificates & Achievements</h2>
-					<div class="mt-6 flex flex-wrap justify-center gap-8" id="certificates-grid">
-						<article class="bg-bgSoft dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-5 border border-slate-100 dark:border-slate-700 anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/Certificates/Certificat1.jpg">
-							<div class="relative w-full h-[220px] rounded-xl mb-5 border border-slate-200 dark:border-slate-700 bg-cover bg-center" style="background-image: url('images/Certificates/Certificat1.jpg');">
-								<div class="absolute inset-0 pointer-events-none"></div>
+					<div class="anim" data-animate>
+						<p class="section-label">Achievements</p>
+						<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white" data-i18n="certificates.title">Certificates & Achievements</h2>
+					</div>
+					<div class="mt-12 flex flex-wrap justify-center gap-6" id="certificates-grid">
+						<!-- Robotics Workshop -->
+						<article class="card p-0 overflow-hidden flex flex-col preview-btn cursor-pointer anim" data-animate data-img-src="images/Certificates/Certificat1.jpg">
+							<div class="relative w-full h-52 bg-cover bg-center" style="background-image: url('images/Certificates/Certificat1.jpg');"></div>
+							<div class="p-5 flex flex-col flex-grow">
+								<h4 class="font-bold text-base text-slate-900 dark:text-white" data-i18n="certificates.cert1.title">Robotics Workshop</h4>
+								<p class="text-xs text-slate-500 dark:text-slate-500 mt-1.5" data-i18n="certificates.cert1.provider">Provider: Skills Area</p>
+								<p class="text-xs text-slate-400 mt-1" data-i18n="certificates.cert1.date">Date: 15 / 12 / 2024</p>
+								<button class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:underline self-start" data-i18n="certificates.view">View Certificate</button>
 							</div>
-							<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="certificates.cert1.title">Robotics Workshop</h4>
-							<p class="text-sm text-slate-600 dark:text-slate-400 mt-1" data-i18n="certificates.cert1.description">Certificate of participation from Skills Area.</p>
-							<p class="text-xs text-slate-500 mt-2" data-i18n="certificates.cert1.date">Date: 15 / 12 / 2024</p>
-							<button class="mt-auto pt-3 text-sm font-semibold text-accent dark:text-blue-400 hover:underline self-start" data-i18n="certificates.view">View Certificate</button>
 						</article>
-
-						<article class="bg-bgSoft dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-5 border border-slate-100 dark:border-slate-700 anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/Certificates/Certificates2.jpg">
-							<div class="relative w-full h-[220px] rounded-xl mb-5 border border-slate-200 dark:border-slate-700 bg-cover bg-center" style="background-image: url('images/Certificates/Certificates2.jpg');">
-								<div class="absolute inset-0 pointer-events-none"></div>
+						<!-- ISEF Volunteering -->
+						<article class="card p-0 overflow-hidden flex flex-col preview-btn cursor-pointer anim" data-animate data-img-src="images/Certificates/Certificates2.jpg">
+							<div class="relative w-full h-52 bg-cover bg-center" style="background-image: url('images/Certificates/Certificates2.jpg');"></div>
+							<div class="p-5 flex flex-col flex-grow">
+								<h4 class="font-bold text-base text-slate-900 dark:text-white" data-i18n="certificates.cert2.title">ISEF Volunteering</h4>
+								<p class="text-xs text-slate-500 dark:text-slate-500 mt-1.5" data-i18n="certificates.cert2.provider">Provider: ISEF</p>
+								<p class="text-xs text-slate-400 mt-1" data-i18n="certificates.cert2.date">Date: 09 / 12 / 2025</p>
+								<button class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:underline self-start" data-i18n="certificates.view">View Certificate</button>
 							</div>
-							<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="certificates.cert2.title">ISEF Volunteering</h4>
-							<p class="text-sm text-slate-600 dark:text-slate-400 mt-1" data-i18n="certificates.cert2.description">International Science and Engineering Fair.</p>
-							<p class="text-xs text-slate-500 mt-2" data-i18n="certificates.cert2.date">Date: 09 / 12 / 2025</p>
-							<button class="mt-auto pt-3 text-sm font-semibold text-accent dark:text-blue-400 hover:underline self-start" data-i18n="certificates.view">View Certificate</button>
 						</article>
-
 						<!-- Moti-Graph Certificate -->
-						<article class="bg-bgSoft dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-5 border border-slate-100 dark:border-slate-700 anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/Certificates/moti-graph.gif">
-							<div class="relative w-full h-[220px] rounded-xl mb-5 border border-slate-200 dark:border-slate-700 bg-cover bg-center" style="background-image: url('images/Certificates/moti-graph.gif');"></div>
-							<h4 class="font-bold text-xl text-primary dark:text-white" data-i18n="certificates.cert3.title">Mohamed Ramadan | Web Systems Architect</h4>
-							<p class="text-sm text-slate-600 dark:text-slate-400 mt-1" data-i18n="certificates.cert3.description">Certified graduate, specialized in web systems architecture and high-efficiency modern platform development.</p>
-							<p class="text-xs text-slate-500 mt-2" data-i18n="certificates.cert3.date">Date: 2024</p>
-							<div class="mt-auto pt-3 flex gap-3">
-								<button class="text-sm font-semibold text-accent dark:text-blue-400 hover:underline self-start" data-i18n="certificates.view">View Certificate</button>
-								<a href="https://moti-graph.com/index.php" target="_blank" rel="noopener" class="text-sm font-semibold text-accent dark:text-blue-400 hover:underline self-start" data-i18n="certificates.viewOnline">View Online</a>
+						<article class="card p-0 overflow-hidden flex flex-col preview-btn cursor-pointer anim" data-animate data-img-src="images/Certificates/moti-graph.gif">
+							<div class="relative w-full h-52 bg-cover bg-center" style="background-image: url('images/Certificates/moti-graph.gif');"></div>
+							<div class="p-5 flex flex-col flex-grow">
+								<h4 class="font-bold text-base text-slate-900 dark:text-white" data-i18n="certificates.cert3.title">Mohamed Ramadan | Web Systems Architect</h4>
+								<p class="text-xs text-slate-500 dark:text-slate-500 mt-1.5" data-i18n="certificates.cert3.provider">Moti-Graph Company</p>
+								<p class="text-xs text-slate-400 mt-1" data-i18n="certificates.cert3.date">Date: 2024</p>
+								<div class="mt-4 flex gap-3">
+									<button class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:underline self-start" data-i18n="certificates.view">View Certificate</button>
+									<a href="https://moti-graph.com/index.php" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:underline self-start" data-i18n="certificates.viewOnline">View Online</a>
+								</div>
 							</div>
 						</article>
 					</div>
 				</div>
 			</section>
 
-			<section id="projects" class="py-20 bg-bgSoft dark:bg-slate-800">
+			<!-- ═══════════ PROJECTS ═══════════ -->
+			<section id="projects" class="py-24 bg-white dark:bg-[#070d1a]">
 				<div class="max-w-6xl mx-auto px-6">
-					<h2 class="text-3xl font-bold text-primary dark:text-white anim" data-animate data-i18n="projects.title">Selected Web Applications</h2>
-					<p class="text-base text-slate-600 dark:text-slate-400 mt-3 anim" data-animate data-i18n="projects.description">A range of practical systems and web applications, with live demos and source code.</p>
+					<div class="anim" data-animate>
+						<p class="section-label">Portfolio</p>
+						<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white" data-i18n="projects.title">Selected Projects</h2>
+						<p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl" data-i18n="projects.description">A range of practical systems and web applications, with live demos and source code.</p>
+					</div>
 
-					<div id="selected-projects" class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+					<div id="selected-projects" class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
 						<!-- Wood Management System -->
-						<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/system-wood.png">
-							<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/system-wood.png');"><div class="absolute inset-0 pointer-events-none"></div></div>
-							<div class="p-5 flex flex-col flex-grow">
-								<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p5.title">Wood Management System</h4>
-								<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p5.description">Full JS system to manage wood inventory — a practical project.</p>
-								<div class="mt-4 flex gap-3">
-									<a href="https://ramadanx01.github.io/system/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
-									<a href="https://github.com/Ramadanx01/system" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+						<article class="card p-0 overflow-hidden flex flex-col preview-btn cursor-pointer anim" data-animate data-img-src="images/projects/system-wood.png">
+							<div class="project-img-wrap h-40"><div class="w-full h-full bg-cover bg-center" style="background-image: url('images/projects/system-wood.png');"></div></div>
+							<div class="p-4 flex flex-col flex-grow">
+								<h4 class="font-bold text-sm text-accent dark:text-blue-400" data-i18n="projects.p5.title">Wood Management System</h4>
+								<p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 flex-grow leading-relaxed" data-i18n="projects.p5.description">Full JS system to manage wood inventory — a practical project.</p>
+								<div class="mt-3 flex gap-2">
+									<a href="https://ramadanx01.github.io/system/" target="_blank" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition" data-i18n="projects.liveDemo">Live Demo</a>
+									<a href="https://github.com/Ramadanx01/system" target="_blank" class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 dark:bg-white/10 text-white hover:bg-slate-700 dark:hover:bg-white/20 transition" data-i18n="projects.code">Code</a>
 								</div>
 							</div>
 						</article>
-
 						<!-- Electronic Blog -->
-						<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/blog.jpg">
-							<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/blog.jpg');"><div class="absolute inset-0 pointer-events-none"></div></div>
-							<div class="p-5 flex flex-col flex-grow">
-								<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p1.title">Electronic Blog</h4>
-								<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p1.description">A responsive blog application built with modern frontend practices, focusing on clean UI, performance, and maintainable code.</p>
-								<p class="text-xs text-slate-500 dark:text-slate-500 mt-2" data-i18n="projects.p1.tech">Tech: HTML, CSS, JavaScript</p>
-								<div class="mt-4 flex gap-3">
-									<a href="https://ramadanx01.github.io/blog/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
-									<a href="https://github.com/Ramadanx01/blog" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+						<article class="card p-0 overflow-hidden flex flex-col preview-btn cursor-pointer anim" data-animate data-img-src="images/projects/blog.jpg">
+							<div class="project-img-wrap h-40"><div class="w-full h-full bg-cover bg-center" style="background-image: url('images/projects/blog.jpg');"></div></div>
+							<div class="p-4 flex flex-col flex-grow">
+								<h4 class="font-bold text-sm text-accent dark:text-blue-400" data-i18n="projects.p1.title">Electronic Blog</h4>
+								<p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 flex-grow leading-relaxed" data-i18n="projects.p1.description">A responsive blog application built with modern frontend practices.</p>
+								<p class="text-xs text-slate-400 mt-1.5" data-i18n="projects.p1.tech">Tech: HTML, CSS, JavaScript</p>
+								<div class="mt-3 flex gap-2">
+									<a href="https://ramadanx01.github.io/blog/" target="_blank" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition" data-i18n="projects.liveDemo">Live Demo</a>
+									<a href="https://github.com/Ramadanx01/blog" target="_blank" class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 dark:bg-white/10 text-white hover:bg-slate-700 dark:hover:bg-white/20 transition" data-i18n="projects.code">Code</a>
 								</div>
 							</div>
 						</article>
-
-						<!-- Wood Calculator System -->
-						<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/calcoulater.jpg">
-							<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/calcoulater.jpg');"><div class="absolute inset-0 pointer-events-none"></div></div>
-							<div class="p-5 flex flex-col flex-grow">
-								<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p2.title">Wood Calculator System</h4>
-								<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p2.description">Calculates wood cubic measurements based on accounting experience.</p>
-								<p class="text-xs text-slate-500 dark:text-slate-500 mt-2" data-i18n="projects.p2.tech">Tech: JavaScript. Convertible to Web App.</p>
-								<div class="mt-4 flex gap-3">
-									<a href="https://ramadanx01.github.io/calcolator-wood/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
-									<a href="https://github.com/Ramadanx01/calcolator-wood" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+						<!-- Wood Calculator -->
+						<article class="card p-0 overflow-hidden flex flex-col preview-btn cursor-pointer anim" data-animate data-img-src="images/projects/calcoulater.jpg">
+							<div class="project-img-wrap h-40"><div class="w-full h-full bg-cover bg-center" style="background-image: url('images/projects/calcoulater.jpg');"></div></div>
+							<div class="p-4 flex flex-col flex-grow">
+								<h4 class="font-bold text-sm text-accent dark:text-blue-400" data-i18n="projects.p2.title">Wood Calculator System</h4>
+								<p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 flex-grow leading-relaxed" data-i18n="projects.p2.description">Calculates wood cubic measurements based on accounting experience.</p>
+								<p class="text-xs text-slate-400 mt-1.5" data-i18n="projects.p2.tech">Tech: JavaScript</p>
+								<div class="mt-3 flex gap-2">
+									<a href="https://ramadanx01.github.io/calcolator-wood/" target="_blank" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition" data-i18n="projects.liveDemo">Live Demo</a>
+									<a href="https://github.com/Ramadanx01/calcolator-wood" target="_blank" class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 dark:bg-white/10 text-white hover:bg-slate-700 dark:hover:bg-white/20 transition" data-i18n="projects.code">Code</a>
 								</div>
 							</div>
 						</article>
-
-						<!-- To-Do List App -->
-						<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/todo.jpg">
-							<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/todo.jpg');"><div class="absolute inset-0 pointer-events-none"></div></div>
-							<div class="p-5 flex flex-col flex-grow">
-								<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p6.title">To-Do List App</h4>
-								<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p6.description">Shows strong JavaScript fundamentals.</p>
-								<div class="mt-4 flex gap-3">
-									<a href="https://ramadanx01.github.io/To-Do-List/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
-									<a href="https://github.com/Ramadanx01/To-Do-List" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+						<!-- To-Do List -->
+						<article class="card p-0 overflow-hidden flex flex-col preview-btn cursor-pointer anim" data-animate data-img-src="images/projects/todo.jpg">
+							<div class="project-img-wrap h-40"><div class="w-full h-full bg-cover bg-center" style="background-image: url('images/projects/todo.jpg');"></div></div>
+							<div class="p-4 flex flex-col flex-grow">
+								<h4 class="font-bold text-sm text-accent dark:text-blue-400" data-i18n="projects.p6.title">To-Do List App</h4>
+								<p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 flex-grow leading-relaxed" data-i18n="projects.p6.description">Shows strong JavaScript fundamentals.</p>
+								<div class="mt-3 flex gap-2">
+									<a href="https://ramadanx01.github.io/To-Do-List/" target="_blank" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition" data-i18n="projects.liveDemo">Live Demo</a>
+									<a href="https://github.com/Ramadanx01/To-Do-List" target="_blank" class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 dark:bg-white/10 text-white hover:bg-slate-700 dark:hover:bg-white/20 transition" data-i18n="projects.code">Code</a>
 								</div>
 							</div>
 						</article>
@@ -407,54 +730,57 @@
 
 					<!-- Early Learning Projects -->
 					<div class="mt-20">
-						<h3 class="text-2xl font-bold text-primary dark:text-white anim" data-animate data-i18n="projects.learningTitle">Early Learning & Frontend Practice</h3>
-						<p class="text-base text-slate-600 dark:text-slate-400 mt-3 anim" data-animate data-i18n="projects.learningDescription">Early projects used to strengthen core frontend skills and explore UI concepts.</p>
-						<div id="learning-projects" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+						<div class="anim" data-animate>
+							<p class="section-label">Early Work</p>
+							<h3 class="text-2xl font-extrabold text-slate-900 dark:text-white" data-i18n="projects.learningTitle">Early Learning & Frontend Practice</h3>
+							<p class="text-slate-500 dark:text-slate-400 mt-2 text-sm" data-i18n="projects.learningDescription">Early projects used to strengthen core frontend skills and explore UI concepts.</p>
+						</div>
+						<div id="learning-projects" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
 							<!-- Coffee Shop -->
-							<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/coffee_shop.png">
-								<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/coffee_shop.png');"><div class="absolute inset-0 pointer-events-none"></div></div>
-								<div class="p-5 flex flex-col flex-grow">
-									<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p3.title">Coffee Shop Website</h4>
-									<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p3.description">Built with HTML, CSS and JavaScript with several animations.</p>
-									<div class="mt-4 flex gap-3">
-										<a href="https://ramadanx01.github.io/cofipop/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
-										<a href="https://github.com/Ramadanx01/cofipop" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+							<article class="card p-0 overflow-hidden flex flex-col preview-btn cursor-pointer anim" data-animate data-img-src="images/projects/coffee_shop.png">
+								<div class="project-img-wrap h-40"><div class="w-full h-full bg-cover bg-center" style="background-image: url('images/projects/coffee_shop.png');"></div></div>
+								<div class="p-4 flex flex-col flex-grow">
+									<h4 class="font-bold text-sm text-accent dark:text-blue-400" data-i18n="projects.p3.title">Coffee Shop Website</h4>
+									<p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 flex-grow leading-relaxed" data-i18n="projects.p3.description">Built with HTML, CSS and JavaScript with several animations.</p>
+									<div class="mt-3 flex gap-2">
+										<a href="https://ramadanx01.github.io/cofipop/" target="_blank" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition" data-i18n="projects.liveDemo">Live Demo</a>
+										<a href="https://github.com/Ramadanx01/cofipop" target="_blank" class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 dark:bg-white/10 text-white hover:bg-slate-700 dark:hover:bg-white/20 transition" data-i18n="projects.code">Code</a>
 									</div>
 								</div>
 							</article>
 							<!-- Learn Frontend -->
-							<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/learn-frontEnd.jpg">
-								<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/learn-frontEnd.jpg');"><div class="absolute inset-0 pointer-events-none"></div></div>
-								<div class="p-5 flex flex-col flex-grow">
-									<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p4.title">Learn Frontend</h4>
-									<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p4.description">Early UI-focused learning project.</p>
-									<div class="mt-4 flex gap-3">
-										<a href="https://ramadanx01.github.io/learn-front-end/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
-										<a href="https://github.com/Ramadanx01/learn-front-end" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+							<article class="card p-0 overflow-hidden flex flex-col preview-btn cursor-pointer anim" data-animate data-img-src="images/projects/learn-frontEnd.jpg">
+								<div class="project-img-wrap h-40"><div class="w-full h-full bg-cover bg-center" style="background-image: url('images/projects/learn-frontEnd.jpg');"></div></div>
+								<div class="p-4 flex flex-col flex-grow">
+									<h4 class="font-bold text-sm text-accent dark:text-blue-400" data-i18n="projects.p4.title">Learn Frontend</h4>
+									<p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 flex-grow leading-relaxed" data-i18n="projects.p4.description">Early UI-focused learning project.</p>
+									<div class="mt-3 flex gap-2">
+										<a href="https://ramadanx01.github.io/learn-front-end/" target="_blank" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition" data-i18n="projects.liveDemo">Live Demo</a>
+										<a href="https://github.com/Ramadanx01/learn-front-end" target="_blank" class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 dark:bg-white/10 text-white hover:bg-slate-700 dark:hover:bg-white/20 transition" data-i18n="projects.code">Code</a>
 									</div>
 								</div>
 							</article>
 							<!-- Luxury Cars -->
-							<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/Vikings_Auto_Trade.jpg">
-								<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/Vikings_Auto_Trade.jpg');"><div class="absolute inset-0 pointer-events-none"></div></div>
-								<div class="p-5 flex flex-col flex-grow">
-									<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p7.title">Luxury Cars Website</h4>
-									<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p7.description">Modern landing page design.</p>
-									<div class="mt-4 flex gap-3">
-										<a href="https://ramadanx01.github.io/Viking/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
-										<a href="https://github.com/Ramadanx01/Viking" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+							<article class="card p-0 overflow-hidden flex flex-col preview-btn cursor-pointer anim" data-animate data-img-src="images/projects/Vikings_Auto_Trade.jpg">
+								<div class="project-img-wrap h-40"><div class="w-full h-full bg-cover bg-center" style="background-image: url('images/projects/Vikings_Auto_Trade.jpg');"></div></div>
+								<div class="p-4 flex flex-col flex-grow">
+									<h4 class="font-bold text-sm text-accent dark:text-blue-400" data-i18n="projects.p7.title">Luxury Cars Website</h4>
+									<p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 flex-grow leading-relaxed" data-i18n="projects.p7.description">Modern landing page design.</p>
+									<div class="mt-3 flex gap-2">
+										<a href="https://ramadanx01.github.io/Viking/" target="_blank" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition" data-i18n="projects.liveDemo">Live Demo</a>
+										<a href="https://github.com/Ramadanx01/Viking" target="_blank" class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 dark:bg-white/10 text-white hover:bg-slate-700 dark:hover:bg-white/20 transition" data-i18n="projects.code">Code</a>
 									</div>
 								</div>
 							</article>
 							<!-- Juicyland -->
-							<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col preview-btn cursor-pointer" data-animate data-img-src="images/projects/juicyland.jpg">
-								<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/juicyland.jpg');"><div class="absolute inset-0 pointer-events-none"></div></div>
-								<div class="p-5 flex flex-col flex-grow">
-									<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p8.title">Juicyland (Bootstrap)</h4>
-									<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p8.description">Early Bootstrap training project.</p>
-									<div class="mt-4 flex gap-3">
-										<a href="https://ramadanx01.github.io/prject1-for-bootstrap/" target="_blank" class="px-3 py-1.5 text-sm rounded-md border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" data-i18n="projects.liveDemo">Live Demo</a>
-										<a href="https://github.com/Ramadanx01/prject1-for-bootstrap" target="_blank" class="px-3 py-1.5 text-sm rounded-md bg-primary dark:bg-slate-700 text-white hover:bg-slate-700 dark:hover:bg-slate-600 transition" data-i18n="projects.code">Code</a>
+							<article class="card p-0 overflow-hidden flex flex-col preview-btn cursor-pointer anim" data-animate data-img-src="images/projects/juicyland.jpg">
+								<div class="project-img-wrap h-40"><div class="w-full h-full bg-cover bg-center" style="background-image: url('images/projects/juicyland.jpg');"></div></div>
+								<div class="p-4 flex flex-col flex-grow">
+									<h4 class="font-bold text-sm text-accent dark:text-blue-400" data-i18n="projects.p8.title">Juicyland (Bootstrap)</h4>
+									<p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 flex-grow leading-relaxed" data-i18n="projects.p8.description">Early Bootstrap training project.</p>
+									<div class="mt-3 flex gap-2">
+										<a href="https://ramadanx01.github.io/prject1-for-bootstrap/" target="_blank" class="px-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition" data-i18n="projects.liveDemo">Live Demo</a>
+										<a href="https://github.com/Ramadanx01/prject1-for-bootstrap" target="_blank" class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 dark:bg-white/10 text-white hover:bg-slate-700 dark:hover:bg-white/20 transition" data-i18n="projects.code">Code</a>
 									</div>
 								</div>
 							</article>
@@ -463,25 +789,28 @@
 
 					<!-- Private Projects -->
 					<div class="mt-20">
-						<h3 class="text-2xl font-bold text-primary dark:text-white anim" data-animate data-i18n="projects.privateTitle">Private & Commercial Prototypes</h3>
-						<p class="text-base text-slate-600 dark:text-slate-400 mt-3 anim" data-animate data-i18n="projects.privateDescription">These projects were developed for specific clients and are not publicly available due to confidentiality and ownership rights.</p>
-						<div id="private-projects" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+						<div class="anim" data-animate>
+							<p class="section-label">Confidential</p>
+							<h3 class="text-2xl font-extrabold text-slate-900 dark:text-white" data-i18n="projects.privateTitle">Private & Commercial Prototypes</h3>
+							<p class="text-slate-500 dark:text-slate-400 mt-2 text-sm" data-i18n="projects.privateDescription">These projects were developed for specific clients and are not publicly available due to confidentiality and ownership rights.</p>
+						</div>
+						<div id="private-projects" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
 							<!-- ISEF Prototype 1 -->
-							<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col" data-animate>
-								<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/prototype.png');"></div>
-								<div class="p-5 flex flex-col flex-grow">
-									<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p9.title">ISEF Prototype 1</h4>
-									<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p9.description">A prototype for ISEF participants containing scientific material.</p>
-									<p class="mt-4 text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 p-2 rounded-md" data-i18n="projects.p9.disclaimer">Preview or code are not available as this is a private project.</p>
+							<article class="card p-0 overflow-hidden flex flex-col anim" data-animate>
+								<div class="project-img-wrap h-40"><div class="w-full h-full bg-cover bg-center" style="background-image: url('images/projects/prototype.png');"></div></div>
+								<div class="p-4 flex flex-col flex-grow">
+									<h4 class="font-bold text-sm text-accent dark:text-blue-400" data-i18n="projects.p9.title">ISEF Prototype 1</h4>
+									<p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 flex-grow leading-relaxed" data-i18n="projects.p9.description">A prototype for ISEF participants containing scientific material.</p>
+									<p class="mt-3 text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-3 py-2 rounded-lg" data-i18n="projects.p9.disclaimer">Preview or code are not available as this is a private project.</p>
 								</div>
 							</article>
 							<!-- ISEF Prototype 2 -->
-							<article class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 transition duration-300 hover:shadow-xl anim flex flex-col" data-animate>
-								<div class="relative w-full h-44 bg-cover bg-center" style="background-image: url('images/projects/prototype2.png');"></div>
-								<div class="p-5 flex flex-col flex-grow">
-									<h4 class="font-bold text-lg text-accent dark:text-blue-400" data-i18n="projects.p10.title">ISEF Prototype 2</h4>
-									<p class="text-sm text-slate-600 dark:text-slate-400 mt-2 flex-grow" data-i18n="projects.p10.description">A second prototype for ISEF participants with a different design approach.</p>
-									<p class="mt-4 text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 p-2 rounded-md" data-i18n="projects.p10.disclaimer">Preview or code are not available as this is a private project.</p>
+							<article class="card p-0 overflow-hidden flex flex-col anim" data-animate>
+								<div class="project-img-wrap h-40"><div class="w-full h-full bg-cover bg-center" style="background-image: url('images/projects/prototype2.png');"></div></div>
+								<div class="p-4 flex flex-col flex-grow">
+									<h4 class="font-bold text-sm text-accent dark:text-blue-400" data-i18n="projects.p10.title">ISEF Prototype 2</h4>
+									<p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 flex-grow leading-relaxed" data-i18n="projects.p10.description">A second prototype for ISEF participants with a different design approach.</p>
+									<p class="mt-3 text-xs font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-3 py-2 rounded-lg" data-i18n="projects.p10.disclaimer">Preview or code are not available as this is a private project.</p>
 								</div>
 							</article>
 						</div>
@@ -489,81 +818,97 @@
 				</div>
 			</section>
 
-			<section id="what-i-build" class="py-20 bg-bgSoft dark:bg-slate-800">
+			<!-- ═══════════ LEARNING SOURCES ═══════════ -->
+			<section id="learning-sources" class="py-24 bg-bgSoft dark:bg-[#0a1020]">
 				<div class="max-w-6xl mx-auto px-6">
-					<ul class="mt-6 space-y-3 text-lg text-slate-700 dark:text-slate-300 anim list-disc list-inside" data-animate>
-						<li data-i18n="whatIBuild.point1">Full management systems (Admin / User roles)</li>
-						<li data-i18n="whatIBuild.point2">Authentication & verification systems (OTP)</li>
-						<li data-i18n="whatIBuild.point3">Dashboards & control panels</li>
-						<li data-i18n="whatIBuild.point4">Real-world business applications</li>
-						<li data-i18n="whatIBuild.point5">Scalable frontend & backend structures</li>
-					</ul>
+					<div class="anim" data-animate>
+						<p class="section-label">Learning</p>
+						<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white" data-i18n="certificates.learning.title">Learning Sources & Technical References</h2>
+					</div>
+					<div class="mt-10 grid sm:grid-cols-2 gap-4 max-w-2xl">
+						<div class="flex items-start gap-3 p-4 card anim" data-animate>
+							<div class="timeline-dot mt-1.5 flex-shrink-0"></div>
+							<p class="text-sm text-slate-600 dark:text-slate-400" data-i18n="certificates.learning.item1">W3Schools — for core web standards and documentation</p>
+						</div>
+						<div class="flex items-start gap-3 p-4 card anim" data-animate>
+							<div class="timeline-dot mt-1.5 flex-shrink-0"></div>
+							<p class="text-sm text-slate-600 dark:text-slate-400" data-i18n="certificates.learning.item2">Code2Z (code2z.netlify.app) — structured learning and practice reference</p>
+						</div>
+						<div class="flex items-start gap-3 p-4 card anim" data-animate>
+							<div class="timeline-dot mt-1.5 flex-shrink-0"></div>
+							<p class="text-sm text-slate-600 dark:text-slate-400" data-i18n="certificates.learning.item3">Private instructor-led curriculum (name intentionally omitted)</p>
+						</div>
+						<div class="flex items-start gap-3 p-4 card anim" data-animate>
+							<div class="timeline-dot mt-1.5 flex-shrink-0"></div>
+							<p class="text-sm text-slate-600 dark:text-slate-400" data-i18n="certificates.learning.item4">Telegram technical summaries & notes — CodeDarija channel</p>
+						</div>
+					</div>
+					<p class="mt-6 text-sm text-slate-500 dark:text-slate-500 max-w-2xl anim" data-animate data-i18n="certificates.learning.paragraph">Completed a full frontend and backend curriculum consisting of approximately 89 recorded lessons, covering both fundamentals and practical system building. Experienced in translating real UI designs from Figma into clean, functional frontend code. The Wasel project was fully designed in Figma and implemented collaboratively as a shared team project.</p>
 				</div>
 			</section>
 
-			<section id="learning-sources" class="py-20 bg-white dark:bg-slate-900">
+			<!-- ═══════════ FUTURE ═══════════ -->
+			<section id="future" class="py-24 bg-white dark:bg-[#070d1a]">
 				<div class="max-w-6xl mx-auto px-6">
-					<h2 class="text-3xl font-bold text-primary dark:text-white anim" data-animate data-i18n="certificates.learning.title">Learning Sources & Technical References</h2>
-					<ul class="mt-6 space-y-3 text-lg text-slate-700 dark:text-slate-300 anim list-disc list-inside" data-animate>
-						<li data-i18n="certificates.learning.item1">W3Schools — for core web standards and documentation</li>
-						<li data-i18n="certificates.learning.item2">Code2Z (code2z.netlify.app) — structured learning and practice reference</li>
-						<li data-i18n="certificates.learning.item3">Private instructor-led curriculum (name intentionally omitted)</li>
-						<li data-i18n="certificates.learning.item4">Telegram technical summaries & notes — CodeDarija channel</li>
-					</ul>
-					<p class="mt-4 text-slate-700 dark:text-slate-300 anim" data-animate data-i18n="certificates.learning.paragraph">Completed a full frontend and backend curriculum consisting of approximately 89 recorded lessons, covering both fundamentals and practical system building. Experienced in translating real UI designs from Figma into clean, functional frontend code. The Wasel project was fully designed in Figma and implemented collaboratively as a shared team project.</p>
+					<div class="anim" data-animate>
+						<p class="section-label">Roadmap</p>
+						<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white" data-i18n="future.title">Future Development Path</h2>
+					</div>
+					<div class="mt-10 flex flex-wrap gap-4 anim" data-animate>
+						<div class="flex items-start gap-3 p-5 card max-w-sm">
+							<div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center flex-shrink-0">
+								<i class="ri-shield-line text-blue-500 text-lg"></i>
+							</div>
+							<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="future.point1">Deep dive into Cyber Security principles and practices.</p>
+						</div>
+						<div class="flex items-start gap-3 p-5 card max-w-sm">
+							<div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center flex-shrink-0">
+								<i class="ri-global-line text-purple-500 text-lg"></i>
+							</div>
+							<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="future.point2">Advanced understanding of Networking & Internet Systems architecture.</p>
+						</div>
+					</div>
 				</div>
 			</section>
 
-			<section id="future" class="py-20 bg-white dark:bg-slate-900">
-				<div class="max-w-6xl mx-auto px-6">
-					<h2 class="text-3xl font-bold text-primary dark:text-white anim" data-animate data-i18n="future.title">Future Development Path</h2>
-					<ul class="mt-6 space-y-3 text-lg text-slate-700 dark:text-slate-300 anim list-disc list-inside" data-animate>
-						<li data-i18n="future.point1">Deep dive into Cyber Security principles and practices.</li>
-						<li data-i18n="future.point2">Advanced understanding of Networking & Internet Systems architecture.</li>
-					</ul>
-				</div>
-			</section>
-
-			<section id="contact" class="py-20 bg-bgSoft dark:bg-slate-800">
-				<div class="max-w-3xl mx-auto px-6 text-center">
-					<h2 class="text-3xl font-bold text-primary dark:text-white anim" data-animate data-i18n="contact.title">Get In Touch</h2>
-					<p class="text-base text-slate-600 dark:text-slate-400 mt-3 anim" data-animate data-i18n="contact.description">I am open to new opportunities and freelance inquiries. Send a message or connect via the links below.</p>
-
-
-					<!-- Simplified Contact Buttons -->
-					<div class="mt-10 flex flex-wrap justify-center gap-4 anim" data-animate>
-						<a href="mailto:mrsrm555@gmail.com" class="w-full sm:w-auto px-8 py-4 bg-accent text-white font-semibold rounded-xl text-base shadow-lg shadow-accent/30 hover:bg-blue-700 dark:shadow-blue-900/40 transition-colors duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2">
+			<!-- ═══════════ CONTACT ═══════════ -->
+			<section id="contact" class="py-24 bg-bgSoft dark:bg-[#0a1020]">
+				<div class="max-w-2xl mx-auto px-6 text-center">
+					<div class="anim" data-animate>
+						<p class="section-label justify-center">Contact</p>
+						<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white" data-i18n="contact.title">Get In Touch</h2>
+						<p class="text-slate-500 dark:text-slate-400 mt-3 text-sm" data-i18n="contact.description">I am open to new opportunities and freelance inquiries. Send a message or connect via the links below.</p>
+					</div>
+					<div class="mt-10 flex flex-wrap justify-center gap-3 anim" data-animate>
+						<a href="mailto:mrsrm555@gmail.com" class="btn-primary w-full sm:w-auto">
 							<i class="ri-mail-send-line"></i> <span data-i18n="contact.emailDirectly">Email Me Directly</span>
 						</a>
-						<a href="https://wa.me/201080860210" target="_blank" rel="noopener" class="w-full sm:w-auto px-8 py-4 bg-green-600 text-white font-semibold rounded-xl text-base shadow-lg shadow-green-600/30 hover:bg-green-700 dark:shadow-green-900/40 transition-colors duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2">
+						<a href="https://wa.me/201080860210" target="_blank" rel="noopener" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-500 text-white font-semibold rounded-xl shadow-lg shadow-green-500/25 hover:bg-green-600 transition duration-200 transform hover:-translate-y-0.5">
 							<i class="ri-whatsapp-line"></i> <span>WhatsApp</span>
 						</a>
-						<a href="https://www.facebook.com/mohamed.ramadan.788989?locale=ar_AR" target="_blank" rel="noopener" class="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white font-semibold rounded-xl text-base shadow-lg shadow-blue-600/30 hover:bg-blue-700 dark:shadow-blue-900/40 transition-colors duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2">
+						<a href="https://www.facebook.com/mohamed.ramadan.788989?locale=ar_AR" target="_blank" rel="noopener" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:bg-blue-600 transition duration-200 transform hover:-translate-y-0.5">
 							<i class="ri-facebook-circle-line"></i> <span>Facebook</span>
 						</a>
-						<a href="https://github.com/Ramadanx01" target="_blank" rel="noopener" class="w-full sm:w-auto px-8 py-4 border border-slate-300 dark:border-slate-600 text-primary dark:text-slate-200 font-semibold rounded-xl text-base hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300 flex items-center justify-center gap-2">
+						<a href="https://github.com/Ramadanx01" target="_blank" rel="noopener" class="btn-ghost w-full sm:w-auto">
 							<i class="ri-github-line"></i> <span data-i18n="contact.github">GitHub Profile</span>
 						</a>
 					</div>
 				</div>
 			</section>
 
-			<footer class="py-10 text-center text-sm text-slate-600 dark:text-slate-400 bg-bgSoft dark:bg-slate-800 border-t border-slate-100 dark:border-slate-800">
-				<div class="flex flex-wrap justify-center items-center gap-4 mb-4">
-					<span data-i18n="footer.text">© <span id="year"></span> Mohamad Ramadan — Full Stack Web Developer</span>
+			<footer class="py-10 text-center text-sm text-slate-500 dark:text-slate-500 bg-white dark:bg-[#070d1a] border-t border-slate-100 dark:border-white/5">
+				<div class="flex flex-wrap justify-center items-center gap-5 mb-4">
+					<span class="dark:text-slate-500" data-i18n="footer.text">© <span id="year"></span> Mohamad Ramadan — Full Stack Web Developer</span>
 				</div>
-				<div class="flex flex-wrap justify-center items-center gap-4">
-					<a href="https://wa.me/201080860210" target="_blank" rel="noopener" class="flex items-center gap-2 text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 transition-colors">
-						<i class="ri-whatsapp-line text-lg"></i>
-						<span>WhatsApp</span>
+				<div class="flex flex-wrap justify-center items-center gap-5">
+					<a href="https://wa.me/201080860210" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-green-500 hover:text-green-600 dark:hover:text-green-400 transition-colors text-sm">
+						<i class="ri-whatsapp-line text-base"></i> WhatsApp
 					</a>
-					<a href="https://www.facebook.com/mohamed.ramadan.788989?locale=ar_AR" target="_blank" rel="noopener" class="flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
-						<i class="ri-facebook-circle-line text-lg"></i>
-						<span>Facebook</span>
+					<a href="https://www.facebook.com/mohamed.ramadan.788989?locale=ar_AR" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">
+						<i class="ri-facebook-circle-line text-base"></i> Facebook
 					</a>
-					<a href="https://github.com/Ramadanx01" target="_blank" rel="noopener" class="flex items-center gap-2 text-slate-600 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 transition-colors">
-						<i class="ri-github-line text-lg"></i>
-						<span>GitHub</span>
+					<a href="https://github.com/Ramadanx01" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-slate-500 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-300 transition-colors text-sm">
+						<i class="ri-github-line text-base"></i> GitHub
 					</a>
 				</div>
 			</footer>
@@ -571,23 +916,26 @@
 
 		<!-- Scroll Navigation Arrows -->
 		<div class="scroll-nav">
-			<button id="scrollUp" aria-label="Scroll Up" class="w-12 h-12 rounded-full bg-accent/80 dark:bg-blue-500/80 text-white shadow-lg hover:bg-accent dark:hover:bg-blue-500 transition backdrop-blur-sm"><i class="ri-arrow-up-s-line text-2xl"></i></button>
-			<button id="scrollDown" aria-label="Scroll Down" class="w-12 h-12 rounded-full bg-accent/80 dark:bg-blue-500/80 text-white shadow-lg hover:bg-accent dark:hover:bg-blue-500 transition backdrop-blur-sm"><i class="ri-arrow-down-s-line text-2xl"></i></button>
+			<button id="scrollUp" aria-label="Scroll Up" class="w-11 h-11 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 shadow-lg hover:bg-accent hover:text-white hover:border-accent dark:hover:bg-blue-500 dark:hover:border-blue-500 transition"><i class="ri-arrow-up-s-line text-xl"></i></button>
+			<button id="scrollDown" aria-label="Scroll Down" class="w-11 h-11 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 shadow-lg hover:bg-accent hover:text-white hover:border-accent dark:hover:bg-blue-500 dark:hover:border-blue-500 transition"><i class="ri-arrow-down-s-line text-xl"></i></button>
 		</div>
 
 		<!-- Generic Alert Modal -->
 		<div id="alertModal" class="modal hidden" role="dialog" aria-modal="true">
-			<div class="relative bg-white dark:bg-slate-800 w-11/12 max-w-md m-auto rounded-2xl shadow-xl p-6 sm:p-8 text-center" id="alertModalContent">
-				<h3 id="alertModalTitle" class="text-xl font-bold text-primary dark:text-white" data-i18n="modal.cvTitle">CV</h3>
-				<p id="alertModalBody" class="text-slate-600 dark:text-slate-300 mt-4" data-i18n="hero.cvAlert">The CV is not available for download at the moment. It will be uploaded soon.</p>
-				<button id="alertModalClose" class="mt-6 w-full sm:w-auto px-8 py-3 bg-accent text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors duration-300" data-i18n="modal.close">Close</button>
+			<div class="relative bg-white dark:bg-[#111827] w-11/12 max-w-md m-auto rounded-2xl shadow-2xl p-7 sm:p-9 text-center border border-slate-100 dark:border-white/10" id="alertModalContent">
+				<div class="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mx-auto mb-5">
+					<i class="ri-file-user-line text-2xl text-blue-500"></i>
+				</div>
+				<h3 id="alertModalTitle" class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="modal.cvTitle">CV</h3>
+				<p id="alertModalBody" class="text-slate-500 dark:text-slate-400 mt-3 text-sm" data-i18n="hero.cvAlert">The CV is not available for download at the moment. It will be uploaded soon.</p>
+				<button id="alertModalClose" class="mt-6 btn-primary w-full sm:w-auto" data-i18n="modal.close">Close</button>
 			</div>
 		</div>
 
 		<!-- Image Preview Modal -->
 		<div id="imageModal" class="modal hidden" role="dialog" aria-modal="true">
 			<div class="relative p-4" id="imageModalContent">
-				<img id="modalImage" src="" alt="Image Preview" class="max-w-[90vw] max-h-[90vh] rounded-lg shadow-2xl" oncontextmenu="return false;" />
+				<img id="modalImage" src="" alt="Image Preview" class="max-w-[90vw] max-h-[90vh] rounded-2xl shadow-2xl" oncontextmenu="return false;" />
 			</div>
 		</div>
 
@@ -615,9 +963,7 @@
 
 				alertModalCloseBtn.addEventListener('click', closeModal);
 				alertModal.addEventListener('click', (e) => {
-					if (!alertModalContent.contains(e.target)) {
-						closeModal();
-					}
+					if (!alertModalContent.contains(e.target)) closeModal();
 				});
 
 				// Image Preview Modal Logic
@@ -641,7 +987,9 @@
 					document.body.style.overflow = '';
 				};
 
-				imageModal.addEventListener('click', (e) => { if (!imageModalContent.contains(e.target)) closeImageModal(); });
+				imageModal.addEventListener('click', (e) => {
+					if (!imageModalContent.contains(e.target)) closeImageModal();
+				});
 
 				// PWA Service Worker Registration
 				if ('serviceWorker' in navigator) {
