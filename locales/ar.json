@@ -76,7 +76,7 @@
         "mtec": {
             "title": "تدريب Full Stack",
             "provider": "مقدم من: MTEC",
-            "viewCompany": "عرض الشركة <i class='ri-external-link-line ml-1'></i>"
+            "viewCompany": "عرض الشركة <i class='fa-solid fa-up-right-from-square ml-1'></i>"
         },
         "mtecDescription": "أكملت تدريبًا مكثفًا في MTEC - شركة برمجيات.",
         "motiGraph": {
@@ -117,7 +117,8 @@
     "future": {
         "title": "مسار التطوير المستقبلي",
         "point1": "الغوص بعمق في مبادئ وممارسات الأمن السيبراني.",
-        "point2": "فهم متقدم لهيكلة الشبكات وأنظمة الإنترنت."
+        "point2": "فهم متقدم لهيكلة الشبكات وأنظمة الإنترنت.",
+        "point3": "أقوم حالياً بتطوير مهاراتي من خلال تعلم React بشكل احترافي وكذلك Laravel عبر دورات متقدمة على منصة Udemy."
     },
     "advanced": {
         "title": "مشاريع احترافية مميزة",
