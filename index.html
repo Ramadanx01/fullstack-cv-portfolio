@@ -64,7 +64,7 @@
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-		<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 		<link href="assets/rtl.css" rel="stylesheet">
 
 		<style>
@@ -304,7 +304,7 @@
 					<!-- Language Dropdown -->
 					<div class="relative">
 						<button id="lang-toggle-btn" class="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition" aria-label="Open language menu">
-							<i class="ri-translate-2 text-lg"></i>
+							<i class="fa-solid fa-language text-lg"></i>
 						</button>
 						<div id="lang-menu" class="hidden absolute right-0 mt-2 w-36 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-100 dark:border-white/10 p-1.5 z-50">
 							<button data-lang="en" class="lang-option w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 dark:text-slate-300 transition">English (EN)</button>
@@ -313,11 +313,11 @@
 					</div>
 					<!-- Theme Toggle -->
 					<button id="theme-toggle" class="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition" aria-label="Toggle theme">
-						<i class="ri-sun-line text-lg" id="theme-icon-light"></i>
-						<i class="ri-moon-line text-lg hidden" id="theme-icon-dark"></i>
+						<i class="fa-solid fa-sun text-lg" id="theme-icon-light"></i>
+						<i class="fa-solid fa-moon text-lg hidden" id="theme-icon-dark"></i>
 					</button>
 					<div class="md:hidden">
-						<button id="menuBtn" aria-label="Open menu" class="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition"><i class="ri-menu-3-line text-lg"></i></button>
+						<button id="menuBtn" aria-label="Open menu" class="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition"><i class="fa-solid fa-bars-staggered text-lg"></i></button>
 					</div>
 				</div>
 			</div>
@@ -328,7 +328,7 @@
 		<nav id="mobileNav" class="fixed top-0 right-0 h-full w-72 bg-white dark:bg-[#0d1322] shadow-2xl p-6 z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden border-l border-slate-100 dark:border-white/5">
 			<div class="flex justify-between items-center mb-8">
 				<span class="font-bold text-lg gradient-text">Menu</span>
-				<button id="closeMenuBtn" aria-label="Close menu" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-white/5 transition"><i class="ri-close-line text-xl"></i></button>
+				<button id="closeMenuBtn" aria-label="Close menu" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-white/5 transition"><i class="fa-solid fa-xmark text-xl"></i></button>
 			</div>
 			<div class="space-y-1">
 				<a href="#about" class="block p-3 rounded-xl hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5 font-medium transition" data-i18n="nav.about">About</a>
@@ -361,8 +361,8 @@
 						<div class="flex flex-wrap justify-center md:justify-start gap-3 pt-1">
 							<a href="#projects" class="btn-primary" data-i18n="hero.viewProjects">View Featured Projects</a>
 							<a href="#contact" class="btn-ghost" data-i18n="hero.contactMe">Contact Me</a>
-							<button id="download-cv-btn" class="btn-ghost"><i class="ri-download-2-line"></i> <span data-i18n="hero.downloadCV">Download CV</span></button>
-							<a href="https://github.com/Ramadanx01" target="_blank" rel="noopener" class="btn-ghost"><i class="ri-github-line"></i> <span data-i18n="hero.github">GitHub</span></a>
+							<button id="download-cv-btn" class="btn-ghost"><i class="fa-solid fa-download"></i> <span data-i18n="hero.downloadCV">Download CV</span></button>
+							<a href="https://github.com/Ramadanx01" target="_blank" rel="noopener" class="btn-ghost"><i class="fa-brands fa-github"></i> <span data-i18n="hero.github">GitHub</span></a>
 						</div>
 					</div>
 					<!-- Image -->
@@ -378,7 +378,7 @@
 				<!-- Scroll indicator -->
 				<div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40 dark:opacity-30 animate-bounce">
 					<div class="w-px h-8 bg-slate-400 dark:bg-slate-600"></div>
-					<i class="ri-arrow-down-s-line text-slate-400 dark:text-slate-600 text-lg"></i>
+					<i class="fa-solid fa-chevron-down text-slate-400 dark:text-slate-600 text-lg"></i>
 				</div>
 			</section>
 
@@ -402,7 +402,7 @@
 								</div>
 								<p class="text-sm text-slate-500 dark:text-slate-400 flex-grow leading-relaxed" data-i18n="advanced.p4.description">Architecture and development of the Moti-Graph official platform, focusing on performance and modern architecture.</p>
 								<div class="mt-4 pt-4 border-t border-slate-100 dark:border-white/5 flex items-center gap-3">
-									<a href="https://moti-graph.com/index.php" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition" data-i18n="projects.liveDemo">Live Demo <i class="ri-external-link-line"></i></a>
+									<a href="https://moti-graph.com/index.php" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition" data-i18n="projects.liveDemo">Live Demo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
 								</div>
 							</div>
 						</article>
@@ -418,7 +418,7 @@
 								</div>
 								<p class="text-sm text-slate-500 dark:text-slate-400 flex-grow leading-relaxed" data-i18n="advanced.p5.description">Design and development of the official MTEC IT company website (mtec-eg.com).</p>
 								<div class="mt-4 pt-4 border-t border-slate-100 dark:border-white/5 flex items-center gap-3">
-									<a href="https://mtec-eg.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition" data-i18n="projects.liveDemo">Live Demo <i class="ri-external-link-line"></i></a>
+									<a href="https://mtec-eg.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition" data-i18n="projects.liveDemo">Live Demo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
 								</div>
 							</div>
 						</article>
@@ -432,7 +432,7 @@
 								</div>
 							</div>
 							<p class="text-sm text-slate-500 dark:text-slate-400 flex-grow leading-relaxed" data-i18n="advanced.p3.description">End-to-end food delivery platform with multi-role access (Super Admin, Restaurant Admin, Customers), secure authentication, order lifecycle management, and commission system.</p>
-							<a href="https://github.com/Ramadanx01/Wasel_website" target="_blank" rel="noopener" class="mt-4 btn-ghost text-sm py-2.5 px-4"><i class="ri-github-line"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
+							<a href="https://github.com/Ramadanx01/Wasel_website" target="_blank" rel="noopener" class="mt-4 btn-ghost text-sm py-2.5 px-4"><i class="fa-brands fa-github"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
 						</article>
 						<!-- Korsaty -->
 						<article class="card p-5 flex flex-col anim" data-animate>
@@ -444,7 +444,7 @@
 								</div>
 							</div>
 							<p class="text-sm text-slate-500 dark:text-slate-400 flex-grow leading-relaxed" data-i18n="advanced.p1.description">A complete educational platform featuring multi-role access (Admin, Instructor, Student), course management, and content delivery systems, built with a focus on scalability.</p>
-							<a href="https://github.com/Ramadanx01/Korsaty" target="_blank" rel="noopener" class="mt-4 btn-ghost text-sm py-2.5 px-4"><i class="ri-github-line"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
+							<a href="https://github.com/Ramadanx01/Korsaty" target="_blank" rel="noopener" class="mt-4 btn-ghost text-sm py-2.5 px-4"><i class="fa-brands fa-github"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
 						</article>
 						<!-- Sab3awy -->
 						<article class="card p-5 flex flex-col anim" data-animate>
@@ -456,7 +456,7 @@
 								</div>
 							</div>
 							<p class="text-sm text-slate-500 dark:text-slate-400 flex-grow leading-relaxed" data-i18n="advanced.p2.description">An end-to-end management system for a clothing business, handling inventory, sales, and reporting. Currently undergoing a strategic migration to a modern React & Laravel stack.</p>
-							<a href="https://github.com/Ramadanx01/sab3awy" target="_blank" rel="noopener" class="mt-4 btn-ghost text-sm py-2.5 px-4"><i class="ri-github-line"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
+							<a href="https://github.com/Ramadanx01/sab3awy" target="_blank" rel="noopener" class="mt-4 btn-ghost text-sm py-2.5 px-4"><i class="fa-brands fa-github"></i> <span data-i18n="advanced.viewOnGithub">View Code on GitHub</span></a>
 						</article>
 					</div>
 				</div>
@@ -476,7 +476,7 @@
 								<h4 class="font-bold text-lg text-slate-900 dark:text-white" data-i18n="training.mtec.title">Full Stack Training</h4>
 								<p class="text-sm text-slate-500 dark:text-slate-400 mt-1" data-i18n="training.mtec.description">Completed intensive training at MTEC - Software Company.</p>
 								<div class="mt-4 pt-4 border-t border-slate-100 dark:border-white/5">
-									<a href="https://mtec-eg.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:underline">Website <i class="ri-external-link-line"></i></a>
+									<a href="https://mtec-eg.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:underline">Website <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
 								</div>
 							</div>
 						</article>
@@ -487,8 +487,8 @@
 							</div>
 							<p class="text-sm text-slate-500 dark:text-slate-400 flex-grow leading-relaxed" data-i18n="training.motiGraph.description">Certified graduate and active team member, specializing in web systems architecture and high-efficiency modern platform development.</p>
 							<div class="mt-4 pt-4 border-t border-slate-100 dark:border-white/5 flex gap-4">
-								<a href="https://moti-graph.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:underline">Website <i class="ri-external-link-line"></i></a>
-								<a href="https://moti-graph.com/index.php" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:underline">Certificate <i class="ri-external-link-line"></i></a>
+								<a href="https://moti-graph.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:underline">Website <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+								<a href="https://moti-graph.com/index.php" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent dark:text-blue-400 hover:underline">Certificate <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
 							</div>
 						</article>
 					</div>
@@ -505,9 +505,9 @@
 							<p class="mt-5 text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="about.description">I am a Full Stack Web Developer who builds practical systems end-to-end. I enjoy taking concepts from idea to production and solving real problems with clean, maintainable code.</p>
 							<p class="mt-4 text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="about.additionalDescription">I focus on system-level development, working with authentication flows, admin dashboards, database design, and real business requirements. I have hands-on experience converting Figma designs into functional applications.</p>
 							<div class="mt-6 flex flex-wrap gap-2">
-								<span class="skill-badge"><i class="ri-links-line text-xs"></i> <a href="https://w3schools.com" target="_blank" rel="noopener" data-i18n="about.ref1">W3Schools</a></span>
-								<span class="skill-badge"><i class="ri-links-line text-xs"></i> <a href="https://code2z.netlify.app" target="_blank" rel="noopener" data-i18n="about.ref2">code2z.netlify.app</a></span>
-								<span class="skill-badge"><i class="ri-telegram-line text-xs"></i> <a href="https://t.me/codeDarija" target="_blank" rel="noopener" data-i18n="about.ref3">t.me/codeDarija</a></span>
+								<span class="skill-badge"><i class="fa-solid fa-link text-xs"></i> <a href="https://w3schools.com" target="_blank" rel="noopener" data-i18n="about.ref1">W3Schools</a></span>
+								<span class="skill-badge"><i class="fa-solid fa-link text-xs"></i> <a href="https://code2z.netlify.app" target="_blank" rel="noopener" data-i18n="about.ref2">code2z.netlify.app</a></span>
+								<span class="skill-badge"><i class="fa-brands fa-telegram text-xs"></i> <a href="https://t.me/codeDarija" target="_blank" rel="noopener" data-i18n="about.ref3">t.me/codeDarija</a></span>
 							</div>
 						</div>
 						<!-- What I Build -->
@@ -553,7 +553,7 @@
 						<div class="card p-5 anim" data-animate>
 							<div class="flex items-center gap-3 mb-4">
 								<div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
-									<i class="ri-layout-4-line text-blue-500 text-xl"></i>
+									<i class="fa-solid fa-laptop-code text-blue-500 text-xl"></i>
 								</div>
 								<h3 class="font-bold text-slate-900 dark:text-white">Frontend</h3>
 							</div>
@@ -572,7 +572,7 @@
 						<div class="card p-5 anim" data-animate>
 							<div class="flex items-center gap-3 mb-4">
 								<div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center">
-									<i class="ri-server-line text-purple-500 text-xl"></i>
+									<i class="fa-solid fa-server text-purple-500 text-xl"></i>
 								</div>
 								<h3 class="font-bold text-slate-900 dark:text-white">Backend</h3>
 							</div>
@@ -589,7 +589,7 @@
 						<div class="card p-5 anim" data-animate>
 							<div class="flex items-center gap-3 mb-4">
 								<div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center">
-									<i class="ri-tools-line text-emerald-500 text-xl"></i>
+									<i class="fa-solid fa-screwdriver-wrench text-emerald-500 text-xl"></i>
 								</div>
 								<h3 class="font-bold text-slate-900 dark:text-white">Tools</h3>
 							</div>
@@ -605,7 +605,7 @@
 						<div class="card p-5 anim" data-animate>
 							<div class="flex items-center gap-3 mb-4">
 								<div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-900/20 flex items-center justify-center">
-									<i class="ri-shield-keyhole-line text-amber-500 text-xl"></i>
+									<i class="fa-solid fa-shield-halved text-amber-500 text-xl"></i>
 								</div>
 								<h3 class="font-bold text-slate-900 dark:text-white">Core Skills</h3>
 							</div>
@@ -857,13 +857,13 @@
 					<div class="mt-10 flex flex-wrap gap-4 anim" data-animate>
 						<div class="flex items-start gap-3 p-5 card max-w-sm">
 							<div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center flex-shrink-0">
-								<i class="ri-shield-line text-blue-500 text-lg"></i>
+								<i class="fa-solid fa-shield-cat text-blue-500 text-lg"></i>
 							</div>
 							<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="future.point1">Deep dive into Cyber Security principles and practices.</p>
 						</div>
 						<div class="flex items-start gap-3 p-5 card max-w-sm">
 							<div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center flex-shrink-0">
-								<i class="ri-global-line text-purple-500 text-lg"></i>
+								<i class="fa-solid fa-globe text-purple-500 text-lg"></i>
 							</div>
 							<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="future.point2">Advanced understanding of Networking & Internet Systems architecture.</p>
 						</div>
@@ -881,16 +881,16 @@
 					</div>
 					<div class="mt-10 flex flex-wrap justify-center gap-3 anim" data-animate>
 						<a href="mailto:mrsrm555@gmail.com" class="btn-primary w-full sm:w-auto">
-							<i class="ri-mail-send-line"></i> <span data-i18n="contact.emailDirectly">Email Me Directly</span>
+							<i class="fa-solid fa-envelope-open-text"></i> <span data-i18n="contact.emailDirectly">Email Me Directly</span>
 						</a>
 						<a href="https://wa.me/201080860210" target="_blank" rel="noopener" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-500 text-white font-semibold rounded-xl shadow-lg shadow-green-500/25 hover:bg-green-600 transition duration-200 transform hover:-translate-y-0.5">
-							<i class="ri-whatsapp-line"></i> <span>WhatsApp</span>
+							<i class="fa-brands fa-whatsapp"></i> <span>WhatsApp</span>
 						</a>
 						<a href="https://www.facebook.com/mohamed.ramadan.788989?locale=ar_AR" target="_blank" rel="noopener" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/25 hover:bg-blue-600 transition duration-200 transform hover:-translate-y-0.5">
-							<i class="ri-facebook-circle-line"></i> <span>Facebook</span>
+							<i class="fa-brands fa-facebook"></i> <span>Facebook</span>
 						</a>
 						<a href="https://github.com/Ramadanx01" target="_blank" rel="noopener" class="btn-ghost w-full sm:w-auto">
-							<i class="ri-github-line"></i> <span data-i18n="contact.github">GitHub Profile</span>
+							<i class="fa-brands fa-github"></i> <span data-i18n="contact.github">GitHub Profile</span>
 						</a>
 					</div>
 				</div>
@@ -902,13 +902,13 @@
 				</div>
 				<div class="flex flex-wrap justify-center items-center gap-5">
 					<a href="https://wa.me/201080860210" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-green-500 hover:text-green-600 dark:hover:text-green-400 transition-colors text-sm">
-						<i class="ri-whatsapp-line text-base"></i> WhatsApp
+						<i class="fa-brands fa-whatsapp text-base"></i> WhatsApp
 					</a>
 					<a href="https://www.facebook.com/mohamed.ramadan.788989?locale=ar_AR" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm">
-						<i class="ri-facebook-circle-line text-base"></i> Facebook
+						<i class="fa-brands fa-facebook text-base"></i> Facebook
 					</a>
 					<a href="https://github.com/Ramadanx01" target="_blank" rel="noopener" class="flex items-center gap-1.5 text-slate-500 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-300 transition-colors text-sm">
-						<i class="ri-github-line text-base"></i> GitHub
+						<i class="fa-brands fa-github text-base"></i> GitHub
 					</a>
 				</div>
 			</footer>
@@ -916,15 +916,15 @@
 
 		<!-- Scroll Navigation Arrows -->
 		<div class="scroll-nav">
-			<button id="scrollUp" aria-label="Scroll Up" class="w-11 h-11 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 shadow-lg hover:bg-accent hover:text-white hover:border-accent dark:hover:bg-blue-500 dark:hover:border-blue-500 transition"><i class="ri-arrow-up-s-line text-xl"></i></button>
-			<button id="scrollDown" aria-label="Scroll Down" class="w-11 h-11 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 shadow-lg hover:bg-accent hover:text-white hover:border-accent dark:hover:bg-blue-500 dark:hover:border-blue-500 transition"><i class="ri-arrow-down-s-line text-xl"></i></button>
+			<button id="scrollUp" aria-label="Scroll Up" class="w-11 h-11 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 shadow-lg hover:bg-accent hover:text-white hover:border-accent dark:hover:bg-blue-500 dark:hover:border-blue-500 transition"><i class="fa-solid fa-chevron-up text-xl"></i></button>
+			<button id="scrollDown" aria-label="Scroll Down" class="w-11 h-11 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 shadow-lg hover:bg-accent hover:text-white hover:border-accent dark:hover:bg-blue-500 dark:hover:border-blue-500 transition"><i class="fa-solid fa-chevron-down text-xl"></i></button>
 		</div>
 
 		<!-- Generic Alert Modal -->
 		<div id="alertModal" class="modal hidden" role="dialog" aria-modal="true">
 			<div class="relative bg-white dark:bg-[#111827] w-11/12 max-w-md m-auto rounded-2xl shadow-2xl p-7 sm:p-9 text-center border border-slate-100 dark:border-white/10" id="alertModalContent">
 				<div class="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mx-auto mb-5">
-					<i class="ri-file-user-line text-2xl text-blue-500"></i>
+					<i class="fa-solid fa-file-invoice text-2xl text-blue-500"></i>
 				</div>
 				<h3 id="alertModalTitle" class="text-xl font-bold text-slate-900 dark:text-white" data-i18n="modal.cvTitle">CV</h3>
 				<p id="alertModalBody" class="text-slate-500 dark:text-slate-400 mt-3 text-sm" data-i18n="hero.cvAlert">The CV is not available for download at the moment. It will be uploaded soon.</p>
