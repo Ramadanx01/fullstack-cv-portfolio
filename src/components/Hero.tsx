@@ -135,13 +135,13 @@ export default function Hero() {
 
             {/* 4. عرض الصورة الشخصية */}
             <img 
-              src="/src/assets/images/profile1.jpg" 
-              alt="Mohamad Ramadan" 
-              className="w-[85%] h-[85%] object-cover rounded-full border border-white/10 drop-shadow-[0_15px_30px_rgba(0,245,255,0.3)] filter contrast-105 saturate-110 relative z-10"
-              onError={(e) => {
-                e.currentTarget.src = "https://via.placeholder.com/400";
-              }}
-            />
+                 src={profileImg}  /* 🎯 هنا التعديل السحري */
+                 alt="Mohamad Ramadan" 
+                 className="w-[85%] h-[85%] object-cover rounded-full border border-white/10 drop-shadow-[0_15px_30px_rgba(0,245,255,0.3)] filter contrast-105 saturate-110 relative z-10"
+                 onError={(e) => {
+                   e.currentTarget.src = "https://via.placeholder.com/400";
+                 }}
+               />
             
             {/* 5. ظل نيون سفلي ناعم يعكس الإضاءة المستندة للقاعدة */}
             <div className="absolute bottom-4 w-1/2 h-4 bg-cyan-neon/30 blur-xl rounded-full z-20" />
