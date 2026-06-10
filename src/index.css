@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;600;700;800&display=swap');
+
+@theme {
+  --font-sans: 'Inter', 'Cairo', sans-serif;
+  
+  /* الألوان المستقبلية الفخمة اللي اخترتها */
+  --color-bg-dark: #0a0a0f;
+  --color-cyan-neon: #00f5ff;
+  --color-purple-neon: #a855f7;
+  --color-text-white: #ffffff;
+  --color-muted-gray: #9ca3af;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #0a0a0f;
+}
+
+/* تأثير الـ Neon Glow المخصص */
+.neon-glow-cyan {
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+}
+.neon-glow-purple {
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+::-webkit-scrollbar-thumb {
+  background: #00f5ff;
+  border-radius: 3px;
+}

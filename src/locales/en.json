@@ -1,0 +1,18 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "certificates": "Certificates",
+    "contact": "Contact"
+  },
+  "hero": {
+    "welcome": "Hi, I am",
+    "name": "Mohamad Ramadan",
+    "title": "Full Stack & 3D Developer",
+    "subtitle": "Building robust full-stack web applications and immersive 3D experiences from scratch.",
+    "cta_projects": "View My Work",
+    "cta_contact": "Contact Me"
+  }
+}
