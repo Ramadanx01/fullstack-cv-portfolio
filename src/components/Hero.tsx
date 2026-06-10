@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion'; 
 import { useLanguage } from '../context/LanguageContext';
 import { HiArrowRight, HiArrowLeft } from 'react-icons/hi2';
+import profileImg from '../assets/images/profile1.jpg';
 
 export default function Hero() {
   const { t, isRtl } = useLanguage();
