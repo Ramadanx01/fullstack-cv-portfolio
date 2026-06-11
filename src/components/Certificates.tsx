@@ -6,8 +6,8 @@ import { FiAward, FiExternalLink, FiMaximize2, FiX, FiCalendar } from 'react-ico
 
 // استيراد صور الشهادات من المسارات المحددة بدقة داخل الـ assets
 import cert1Img from '../assets/images/Certificates/cert1.jpg';
-import cert2Img from '../assets/images/Certificates/cert2.jpg';
-import cert3Img from '../assets/images/Certificates/cert3.jpg';
+import cert2Img from '../assets/images/Certificates/cert3.jpg';
+import cert3Img from '../assets/images/Certificates/cert2.jpg';
 
 interface Certificate {
   id: string;
